@@ -1,0 +1,9 @@
+.idea/*
+*/bin/*
+*/obj/*
+Bin/*
+Obj/*
+Debug/*
+debug/*
+.vscode/*
+
