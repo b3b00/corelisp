@@ -39,7 +39,11 @@ namespace program
             }
             else
             {
-                ;
+                Console.WriteLine("parse error :");
+                r.Errors.ForEach(x =>
+                {
+                    Console.WriteLine($"\t{x}");
+                });
             }
         }
 
@@ -64,10 +68,10 @@ namespace program
 
 
             Run(@"
-(* this is Lisp comment *)
+{* this is Lisp comment *}
 ( ( lambda (x) (+ x 1 )) 2)");
             Run(@"
-(* testing print primitive *)
+{* testing print primitive *}
 ( print ""hello core.lisp world"")");
         }
 
@@ -103,7 +107,7 @@ namespace program
             
             Run(@"
 (set 'variable (1 2 3))
-(set addone (lambda (x) (+ 1 x)))
+(set addone (lambda (x) (* 183 x)))
 (map addone variable)
 ");
             
