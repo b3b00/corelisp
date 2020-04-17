@@ -6,7 +6,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\csly\sly\sly.csproj" />
-      <ProjectReference Include="..\LispModel\LispModel.csproj" />
     </ItemGroup>
 
 </Project>
