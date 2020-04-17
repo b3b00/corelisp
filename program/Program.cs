@@ -90,14 +90,21 @@ namespace program
 (cdr variable)
 ");
             Run(@"
-(set 'variable (""a"" ""b"" ""c"" ))
-(cons ""header"" variable)
+(set 'variable (""b"" ""c"" ))
+(cons ""a"" variable)
 ");
             Run(@"
-(set 'variable (""a"" ""b"" ""c"" ))
+(set 'variable (""b"" ""c"" ))
 (set 'first (lambda (x) (car x)))
-(set 'constructed (cons ""header"" variable))
+(set 'constructed (cons ""a"" variable))
 (first constructed)
+");
+            
+            
+            Run(@"
+(set 'variable (1 2 3))
+(set addone (lambda (x) (+ 1 x)))
+(map addone variable)
 ");
             
             

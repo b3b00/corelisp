@@ -7,10 +7,12 @@ namespace LispInterpreter
 
     public class LispRuntimeFunction : LispLiteral
     {
+        public override LispValueType Type { get; set; } = LispValueType.Function;
         public override double DoubleValue => 0.0;
         public override int IntValue => 0;
         public override string StringValue => null;
         public override bool BooleanValue => false;
+        
         public LispFunction Function { get; set; }
 
         public LispRuntimeFunction(LispFunction function)

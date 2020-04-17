@@ -9,11 +9,22 @@ namespace LispInterpreter
     public class LispInterpreter
     {
 
+        public static LispLiteral EvalArg(Context context, LispLiteral arg)
+        {
+            return LispInterpreter.Interprete(context, arg);
+        }
+
+        public static List<LispLiteral> EvalArgs(Context context, List<LispLiteral> args)
+        {
+            return args.Select(x => EvalArg(context,x)).ToList();
+        }
+        
         public static LispRuntimeFunction GetLambda(Context lambdaContext, Lambda lambda)
         {
             LispFunction function = (Context context, LispLiteral[] args) =>
             {
-                if (lambda.Parameters.Count > args.Length)
+                var evaluatedArgs = EvalArgs(context, args.ToList());
+                if (lambda.Parameters.Count > evaluatedArgs.Count)
                 {
                     throw new Exception("ouch : not enough arguments for lambda " + lambda);
                 }
@@ -22,7 +33,7 @@ namespace LispInterpreter
                 int i = 0;
                 foreach (IdentifierLiteral parameter in lambda.Parameters)
                 {
-                    scope[parameter.Value] = args[i];
+                    scope[parameter.Value] = evaluatedArgs[i];
                     i++;
                 }
 
@@ -65,10 +76,6 @@ namespace LispInterpreter
             if (literal is IdentifierLiteral id)
             {
                 var eval = context.Get(id.Value);
-                if (eval is LispRuntimeFunction)
-                {
-                    eval = NilLiteral.Instance;
-                }
                 return eval;
             }
 
@@ -86,16 +93,8 @@ namespace LispInterpreter
             {
                 if (context.Get(id.Value) is LispRuntimeFunction runtimeFunction)
                 {
-                    var args = sexpr.Tail.Select(x => LispInterpreter.Interprete(context, x)).ToList();
+                    var args = sexpr.Tail;
                     return runtimeFunction.Apply(context, args.ToArray());
-                }
-
-                if (context.Get(id.Value) is Lambda lm)
-                {
-                    var lambdaFunction = GetLambda(context, lm);
-                    var args = sexpr.Tail.Select(x => LispInterpreter.Interprete(context, x)).ToList();
-                    return lambdaFunction.Apply(context, args.ToArray());
-                    
                 }
             }
 
@@ -103,7 +102,7 @@ namespace LispInterpreter
             {
                 if (context.Get(oper.Value) is LispRuntimeFunction runtimeFunction)
                 {
-                    var args = sexpr.Tail.Select(x => LispInterpreter.Interprete(context, x)).ToList();
+                    var args = sexpr.Tail;
                     return runtimeFunction.Apply(context, args.ToArray());
                 }
             }
@@ -111,8 +110,13 @@ namespace LispInterpreter
             if (sexpr.Head is Lambda lambda)
             {
                 var l = GetLambda(context, lambda);
-                var args = sexpr.Tail.Select(x => LispInterpreter.Interprete(context, x)).ToList();
+                var args = sexpr.Tail;
                 return l.Apply(context, args.ToArray());
+            }
+            if (sexpr.Head is LispRuntimeFunction function)
+            {
+                var args = sexpr.Tail;
+                return function.Apply(context, args.ToArray());
             }
             return sexpr;
         }

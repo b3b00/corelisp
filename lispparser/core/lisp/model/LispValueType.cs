@@ -9,8 +9,10 @@
         Sexpr = 4,
         Lambda = 5,
         Identifier = 6,
+        Nil = 7,
         Numeric = 8,
 
-        Nil = 7
+        
+        Function = 9
     }
 }

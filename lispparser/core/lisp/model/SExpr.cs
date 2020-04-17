@@ -21,8 +21,13 @@ namespace lispparser.core.lisp.model
 
         public List<LispLiteral> Tail => Elements.Skip(1).ToList();
 
-      
 
+        public SExpr(LispLiteral head, params LispLiteral[] tail)
+        {
+            Elements = new List<LispLiteral>();
+            Elements.Add(head);
+            Elements.AddRange(tail);
+        }
         public SExpr(List<LispLiteral> elements)
         {
             Elements = elements;
