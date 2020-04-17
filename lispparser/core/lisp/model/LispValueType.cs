@@ -1,6 +1,6 @@
 ﻿namespace lispparser.core.lisp.model
 {
-    public enum ListValueType
+    public enum LispValueType
     {
         Int = 0,
         Double = 1,
@@ -9,6 +9,7 @@
         Sexpr = 4,
         Lambda = 5,
         Identifier = 6,
-        
+
+        Nil = 7
     }
 }

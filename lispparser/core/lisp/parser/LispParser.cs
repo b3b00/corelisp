@@ -11,7 +11,7 @@ namespace lispparser.core.lisp.parser
     {
 
         [Production("operator : [PLUS|MINUS|TIMES|DIVIDE]") ]
-        public ILisp lispOperator(Token<LispLexer> token)
+        public LispLiteral lispOperator(Token<LispLexer> token)
         {
             return new LispOperator(token); 
         }
@@ -35,12 +35,21 @@ namespace lispparser.core.lisp.parser
         [Production("literal : ATOM")]
         public ILisp atomLiteral(Token<LispLexer> token)
         {
-            return new AtomLiteral(token); 
+            var atom = new AtomLiteral(token);
+            if (atom.Value == NilLiteral.Nil)
+            {
+                return NilLiteral.Instance;
+            }
+            return atom;
         }
         
         [Production("literal : IDENTIFIER")]
         public ILisp identifierLiteral(Token<LispLexer> token)
         {
+            if (token.Value == NilLiteral.Nil)
+            {
+                return NilLiteral.Instance;
+            }
             return new IdentifierLiteral(token); 
         }
 
@@ -69,8 +78,12 @@ namespace lispparser.core.lisp.parser
         }
 
         [Production("sexpr : LPAREN[d] [literal|operator]* RPAREN[d]")]
-        public ILisp sexpr(List<ILisp> expr)
+        public ILisp sexpr(List<LispLiteral> expr)
         {
+            if (!expr.Any())
+            {
+                return NilLiteral.Instance;
+            }
             return new SExpr(expr);
         }
         

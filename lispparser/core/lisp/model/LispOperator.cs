@@ -3,12 +3,14 @@ using sly.lexer;
 
 namespace lispparser.core.lisp.model
 {
-    public class LispOperator : ILisp
+    public class LispOperator : LispLiteral
     {
 
         private Token<LispLexer> Token;
 
         public LispLexer Operator => Token.TokenID;
+
+        public string Value => Token.Value;
 
         public LispOperator(Token<LispLexer> token)
         {

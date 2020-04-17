@@ -8,11 +8,11 @@ namespace lispparser.core.lisp.model
 {
     public class Lambda : LispLiteral
     {
-        public override ListValueType Type => ListValueType.Lambda;
+        public override LispValueType Type => LispValueType.Lambda;
 
-        private SExpr Body { get; set; }
+        public SExpr Body { get; set; }
 
-        private List<LispLiteral> Parameters { get; set; }
+        public List<LispLiteral> Parameters { get; set; }
       
 
         public Lambda(List<LispLiteral> parameters, SExpr body)

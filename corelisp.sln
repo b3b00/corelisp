@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "program", "program\program.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sly", "..\csly\sly\sly.csproj", "{A50C8F32-6149-4331-87B2-32E7C471C140}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LispInterpreter", "LispInterpreter\LispInterpreter.csproj", "{CCEEDCC8-B4D2-4B34-9EA4-83E868C5FC5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,5 +60,17 @@ Global
 		{A50C8F32-6149-4331-87B2-32E7C471C140}.Release|x64.Build.0 = Release|Any CPU
 		{A50C8F32-6149-4331-87B2-32E7C471C140}.Release|x86.ActiveCfg = Release|Any CPU
 		{A50C8F32-6149-4331-87B2-32E7C471C140}.Release|x86.Build.0 = Release|Any CPU
+		{CCEEDCC8-B4D2-4B34-9EA4-83E868C5FC5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCEEDCC8-B4D2-4B34-9EA4-83E868C5FC5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCEEDCC8-B4D2-4B34-9EA4-83E868C5FC5A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CCEEDCC8-B4D2-4B34-9EA4-83E868C5FC5A}.Debug|x64.Build.0 = Debug|Any CPU
+		{CCEEDCC8-B4D2-4B34-9EA4-83E868C5FC5A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CCEEDCC8-B4D2-4B34-9EA4-83E868C5FC5A}.Debug|x86.Build.0 = Debug|Any CPU
+		{CCEEDCC8-B4D2-4B34-9EA4-83E868C5FC5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCEEDCC8-B4D2-4B34-9EA4-83E868C5FC5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCEEDCC8-B4D2-4B34-9EA4-83E868C5FC5A}.Release|x64.ActiveCfg = Release|Any CPU
+		{CCEEDCC8-B4D2-4B34-9EA4-83E868C5FC5A}.Release|x64.Build.0 = Release|Any CPU
+		{CCEEDCC8-B4D2-4B34-9EA4-83E868C5FC5A}.Release|x86.ActiveCfg = Release|Any CPU
+		{CCEEDCC8-B4D2-4B34-9EA4-83E868C5FC5A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

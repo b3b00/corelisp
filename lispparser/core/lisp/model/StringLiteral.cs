@@ -5,7 +5,7 @@ namespace lispparser.core.lisp.model
 {
     public class StringLiteral : LispLiteral
     {
-        public override ListValueType Type => ListValueType.String;
+        public override LispValueType Type => LispValueType.String;
 
         private Token<LispLexer> Token;
 

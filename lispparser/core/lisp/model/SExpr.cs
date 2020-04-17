@@ -8,17 +8,17 @@ namespace lispparser.core.lisp.model
 {
     public class SExpr : LispLiteral
     {
-        public override ListValueType Type => ListValueType.Sexpr;
+        public override LispValueType Type => LispValueType.Sexpr;
 
-        public List<ILisp> Elements { get; set; }
+        public List<LispLiteral> Elements { get; set; }
 
-        public ILisp Head => Elements.First();
+        public LispLiteral Head => Elements.First();
 
-        public List<ILisp> Tail => Elements.Skip(1).ToList();
+        public List<LispLiteral> Tail => Elements.Skip(1).ToList();
 
       
 
-        public SExpr(List<ILisp> elements)
+        public SExpr(List<LispLiteral> elements)
         {
             Elements = elements;
         }

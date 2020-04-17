@@ -5,7 +5,7 @@ namespace lispparser.core.lisp.model
 {
     public class AtomLiteral : LispLiteral
     {
-        public override ListValueType Type => ListValueType.Atom;
+        public override LispValueType Type => LispValueType.Atom;
 
         private Token<LispLexer> Token;
 

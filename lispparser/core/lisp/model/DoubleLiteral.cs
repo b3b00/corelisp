@@ -5,15 +5,21 @@ namespace lispparser.core.lisp.model
 {
     public class DoubleLiteral : LispLiteral
     {
-        public override ListValueType Type => ListValueType.Double;
+        public override LispValueType Type => LispValueType.Double;
 
         private Token<LispLexer> Token;
 
-        public double Value => Token.DoubleValue;
+        public double Value {get; private set; }
 
+
+        public DoubleLiteral(double value)
+        {
+            Value = value;
+        }
         public DoubleLiteral(Token<LispLexer> token)
         {
             Token = token;
+            Value = token.DoubleValue;
         }
         
         public override string ToString()

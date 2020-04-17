@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\csly\sly\sly.csproj" />
+    <ProjectReference Include="..\LispInterpreter\LispInterpreter.csproj" />
     <ProjectReference Include="..\lispparser\lispparser.csproj" />
   </ItemGroup>
 
