@@ -86,32 +86,42 @@ namespace program
         static void TestProgram()
         {
             Run(@"
-(set 'variable (""a"" ""b"" ""c"" ))
+(setq 'variable (""a"" ""b"" ""c"" ))
 (car variable)
 ");
             Run(@"
-(set 'variable (""a"" ""b"" ""c"" ))
+(setq 'variable (""a"" ""b"" ""c"" ))
 (cdr variable)
 ");
             Run(@"
-(set 'variable (""b"" ""c"" ))
+(setq 'variable (""b"" ""c"" ))
 (cons ""a"" variable)
 ");
             Run(@"
-(set 'variable (""b"" ""c"" ))
-(set 'first (lambda (x) (car x)))
-(set 'constructed (cons ""a"" variable))
+(setq 'variable (""b"" ""c"" ))
+(setq 'first (lambda (x) (car x)))
+(setq 'constructed (cons ""a"" variable))
 (first constructed)
 ");
             
-            
             Run(@"
-(set 'variable (1 2 3))
-(set addone (lambda (x) (* 183 x)))
+(setq 'variable (1 2 3))
+(setq addone (lambda (x) (* 183 x)))
 (map addone variable)
 ");
+            Run(@"
+(setq test 't)
+(if test ""vrai"" ""faux"")");
             
-            
+            Run(@"
+(setq vname 'x )
+(set vname ""vautour"")
+(print ""X"") 
+(print  x)
+(print ""VNAME"")
+(print vanme)
+");
+
         }
 
 

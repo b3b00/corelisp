@@ -59,13 +59,17 @@ namespace LispInterpreter.primitives
 
             List<LispLiteral> cons = new List<LispLiteral>();
             cons.Add(evaluatedArgs[0]);
-            if (evaluatedArgs[1].Type == LispValueType.Sexpr)
+            LispLiteral tail = evaluatedArgs[1];
+            if (evaluatedArgs[1].Type == LispValueType.Sexpr )
             {
                 cons.AddRange((evaluatedArgs[1] as SExpr).Elements);
             }
             else
             {
-                cons.Add(evaluatedArgs[1]);
+                if (evaluatedArgs[1] != NilLiteral.Instance)
+                {
+                    cons.Add(evaluatedArgs[1]);
+                }
             }
 
             return new SExpr(cons);
@@ -98,6 +102,22 @@ namespace LispInterpreter.primitives
             
            return new SExpr(applied);
         }
+        
+        public static LispLiteral If(Context context, params LispLiteral[] args)
+        {
+            var evaluatedArgs = EvalArgs(context, args.ToList());
+            if (evaluatedArgs.Count != 3)
+            {
+                throw new LispPrimitiveBadArgNumber("IF",3,evaluatedArgs.Count);
+            }
+            
+            if (evaluatedArgs[0].BooleanValue)
+            {
+                return evaluatedArgs[1];
+            }
+
+            return evaluatedArgs[2];
+        }
 
         public static LispLiteral Print(Context context, params LispLiteral[] args)
         {
@@ -111,14 +131,16 @@ namespace LispInterpreter.primitives
             return NilLiteral.Instance;
         }
         
-        public static LispLiteral Set(Context context, params LispLiteral[] args)
+        public static LispLiteral SetQ(Context context, params LispLiteral[] args)
         {
-            LispLiteral v1 = args[0];
-            LispLiteral v2 = EvalArg(context, args[1]);
             if (args.Length != 2)
             {
                 throw new LispPrimitiveBadArgNumber("SET", 2, args.Length);
             }
+            
+            LispLiteral v1 = args[0];
+            LispLiteral v2 = EvalArg(context, args[1]);
+           
 
             if (v1.Type != LispValueType.Atom && v1.Type != LispValueType.Identifier)
             {
@@ -132,6 +154,33 @@ namespace LispInterpreter.primitives
             
             return NilLiteral.Instance;
         }
+        
+        public static LispLiteral Set(Context context, params LispLiteral[] args)
+        {
+            if (args.Length != 2)
+            {
+                throw new LispPrimitiveBadArgNumber("SET", 2, args.Length);
+            }
+            var evaluatedArgs = EvalArgs(context, args.ToList());
+            
+            LispLiteral v1 = evaluatedArgs[0];
+            LispLiteral v2 = evaluatedArgs[1];
+            
+
+            if (v1.Type != LispValueType.Atom && v1.Type != LispValueType.Identifier)
+            {
+                throw new LispPrimitiveBadArgType("SET",1,LispValueType.Atom,args[0].Type);
+            }
+
+            if (v1 is AtomLiteral atom)
+                context.Set(atom.Value, v2);
+            if (v1 is IdentifierLiteral id)
+                context.Set(id.Value, v2);
+            
+            return NilLiteral.Instance;
+        }
+        
+        
 
         public static LispLiteral Add(Context context, params LispLiteral[] args)
         {
@@ -313,12 +362,14 @@ namespace LispInterpreter.primitives
             {"cdr",  new LispRuntimeFunction(PrimitiveLibrary.Cdr)},
             {"cons",  new LispRuntimeFunction(PrimitiveLibrary.Cons)},
             {"print",  new LispRuntimeFunction(PrimitiveLibrary.Print)},
+            {"setq",  new LispRuntimeFunction(PrimitiveLibrary.SetQ)},
             {"set",  new LispRuntimeFunction(PrimitiveLibrary.Set)},
             {"map",  new LispRuntimeFunction(PrimitiveLibrary.Map)},
             {"+",new LispRuntimeFunction(PrimitiveLibrary.Add)},
             {"-",new LispRuntimeFunction(PrimitiveLibrary.Substract)},
             {"*",new LispRuntimeFunction(PrimitiveLibrary.Multiply)},
-            {"/",new LispRuntimeFunction(PrimitiveLibrary.Divide)}
+            {"/",new LispRuntimeFunction(PrimitiveLibrary.Divide)},
+            {"if",new LispRuntimeFunction(PrimitiveLibrary.If)}
         };
 
     }
