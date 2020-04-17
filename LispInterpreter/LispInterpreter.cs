@@ -33,8 +33,30 @@ namespace LispInterpreter
             return new LispRuntimeFunction(function);
         }
 
+
+        public static LispLiteral Interprete(Context context, LispProgram program)
+        {
+            if (program.Statements.Any())
+            {
+                LispLiteral t = null; 
+                foreach (var statement in program.Statements)
+                {
+                    t = Interprete(context, statement);
+                }
+
+                return t??NilLiteral.Instance;
+            }
+
+            return NilLiteral.Instance;
+        }
+        
         public static LispLiteral Interprete(Context context, LispLiteral literal)
         {
+            if (literal is Lambda lambda)
+            {
+                return GetLambda(context, lambda);
+            }
+            
             if (literal is SExpr sexpr)
             {
                 return InterpreteSExpr(context, sexpr);
@@ -66,6 +88,14 @@ namespace LispInterpreter
                 {
                     var args = sexpr.Tail.Select(x => LispInterpreter.Interprete(context, x)).ToList();
                     return runtimeFunction.Apply(context, args.ToArray());
+                }
+
+                if (context.Get(id.Value) is Lambda lm)
+                {
+                    var lambdaFunction = GetLambda(context, lm);
+                    var args = sexpr.Tail.Select(x => LispInterpreter.Interprete(context, x)).ToList();
+                    return lambdaFunction.Apply(context, args.ToArray());
+                    
                 }
             }
 

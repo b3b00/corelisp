@@ -65,10 +65,10 @@ namespace lispparser.core.lisp.parser
             return lambda;
         }
 
-        [Production("root: literal")]
-        public ILisp root(ILisp literal)
+        [Production("root: literal*")]
+        public ILisp root(List<ILisp> statements)
         {
-            return literal;
+            return new LispProgram(statements.Cast<LispLiteral>().ToList());
         }
         
         [Production("lambda:LPAREN[d] LAMBDA[d] LPAREN[d] IDENTIFIER* RPAREN[d] sexpr RPAREN[d]")]
@@ -78,13 +78,13 @@ namespace lispparser.core.lisp.parser
         }
 
         [Production("sexpr : LPAREN[d] [literal|operator]* RPAREN[d]")]
-        public ILisp sexpr(List<LispLiteral> expr)
+        public ILisp sexpr(List<ILisp> expr)
         {
             if (!expr.Any())
             {
                 return NilLiteral.Instance;
             }
-            return new SExpr(expr);
+            return new SExpr(expr.Cast<LispLiteral>().ToList());
         }
         
         

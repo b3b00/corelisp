@@ -59,5 +59,9 @@ namespace LispInterpreter
             return NilLiteral.Instance;
         }
 
+        public void Set(string name, LispLiteral value)
+        {
+            Scope.Add(name,value);
+        }
     }
 }

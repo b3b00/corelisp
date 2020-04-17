@@ -67,7 +67,26 @@ namespace LispInterpreter.primitives
             {
                 throw new LispPrimitiveBadArgNumber("PRINT", 1, args.Length);
             }
-            Console.WriteLine(args[0].ToString());
+            Console.WriteLine("PRINT :: "+args[0].ToString());
+            
+            return NilLiteral.Instance;
+        }
+        
+        public static LispLiteral Set(Context context, params LispLiteral[] args)
+        {
+            LispLiteral v1 = args[0];
+            LispLiteral v2 = args[1];
+            if (args.Length != 2)
+            {
+                throw new LispPrimitiveBadArgNumber("SET", 2, args.Length);
+            }
+
+            if (v1.Type != LispValueType.Atom)
+            {
+                throw new LispPrimitiveBadArgType("SET",1,LispValueType.Atom,args[0].Type);
+            }
+
+            context.Set((v1 as AtomLiteral).Value, v2);
             
             return NilLiteral.Instance;
         }
@@ -248,6 +267,7 @@ namespace LispInterpreter.primitives
             {"cdr",  new LispRuntimeFunction(PrimitiveLibrary.Cdr)},
             {"cons",  new LispRuntimeFunction(PrimitiveLibrary.Cons)},
             {"print",  new LispRuntimeFunction(PrimitiveLibrary.Print)},
+            {"set",  new LispRuntimeFunction(PrimitiveLibrary.Set)},
             {"+",new LispRuntimeFunction(PrimitiveLibrary.Add)},
             {"-",new LispRuntimeFunction(PrimitiveLibrary.Substract)},
             {"*",new LispRuntimeFunction(PrimitiveLibrary.Multiply)},

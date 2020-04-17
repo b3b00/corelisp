@@ -3,7 +3,7 @@ using core.lisp.lexer;
 using LispInterpreter;
 using lispparser.core.lisp.model;
 using lispparser.core.lisp.parser;
-using sly.lexer;
+using sly.parser;
 using sly.parser.generator;
 
 
@@ -11,95 +11,105 @@ namespace program
 {
     class Program
     {
-        static void Main(string[] args)
+        private static Parser<LispLexer, ILisp> Parser = null;
+
+        static void BuildParser()
         {
-            // var source = "(* comment *)( lambda (x) (write x 'ato))";
-            // var lexerResult = LexerBuilder.BuildLexer<LispLexer>(LexerExtension.AtomExtension);
-            //
-            // if (lexerResult.IsOk)
-            // {
-            //     var graph = (lexerResult.Result as GenericLexer<LispLexer>).FSMBuilder.Fsm.ToGraphViz();
-            //     var tokenization = lexerResult.Result.Tokenize(source);
-            //     if (tokenization.IsOk)
-            //     {
-            //         foreach (var token in tokenization.Tokens)
-            //         {
-            //             Console.WriteLine(token);
-            //         }
-            //     }
-            // }
-            
-            ParserBuilder<LispLexer,LispLiteral> builder = new ParserBuilder<LispLexer, LispLiteral>();
-            var parserResult = builder.BuildParser(new LispParser(), ParserType.EBNF_LL_RECURSIVE_DESCENT,"literal",LexerExtension.AtomExtension);
-            if (parserResult.IsOk)
+            ParserBuilder<LispLexer, ILisp> builder = new ParserBuilder<LispLexer, ILisp>();
+            var ParserResult = builder.BuildParser(new LispParser(), ParserType.EBNF_LL_RECURSIVE_DESCENT, "root",
+                LexerExtension.AtomExtension);
+            if (ParserResult.IsOk)
             {
-                var parser = parserResult.Result;
-                var r = parser.Parse("1");
-                Console.WriteLine(r.IsOk ? r.Result.ToString() : "KO");
-                r = parser.Parse("2.1");
-                var x = LispInterpreter.LispInterpreter.Interprete(new Context(), r.Result as LispLiteral);
-                Console.WriteLine("=> "+x?.ToString());
-                
-                Console.WriteLine(r.IsOk ? r.Result.ToString() : "KO");
-                r = parser.Parse("\"string\"");
-                Console.WriteLine(r.IsOk ? r.Result.ToString() : "KO");
-                x = LispInterpreter.LispInterpreter.Interprete(new Context(), r.Result as LispLiteral);
-                Console.WriteLine("=> "+x?.ToString());
-                
-                r = parser.Parse("'atom");
-                LispInterpreter.LispInterpreter.Interprete(new Context(), r.Result as LispLiteral);
-                Console.WriteLine(r.IsOk ? r.Result.ToString() : "KO");
-                x = LispInterpreter.LispInterpreter.Interprete(new Context(), r.Result as LispLiteral);
-                Console.WriteLine("=> "+x?.ToString());
-                
-                r = parser.Parse("id");
-                Console.WriteLine(r.IsOk ? r.Result.ToString() : "KO");
-                x = LispInterpreter.LispInterpreter.Interprete(new Context(), r.Result as LispLiteral);                
-                Console.WriteLine("=> "+x?.ToString());
-                
-                r = parser.Parse("( + 1.0 2.0 )");
-                
-                Console.WriteLine(r.IsOk ? r.Result.ToString() : "KO");
-                x = LispInterpreter.LispInterpreter.Interprete(new Context(), r.Result as LispLiteral);
-                Console.WriteLine("=> "+x?.ToString());
-                
-                r = parser.Parse("(( lambda (x) (+ x 11.0 )) 22.0)");
-                Console.WriteLine(r.IsOk ? r.Result.ToString() : "KO");
-                x = LispInterpreter.LispInterpreter.Interprete(new Context(), r.Result as LispLiteral);
-                Console.WriteLine("=> "+x?.ToString());
-                
-                r = parser.Parse("()");
-                Console.WriteLine(r.IsOk ? r.Result.ToString() : "KO");
-                x = LispInterpreter.LispInterpreter.Interprete(new Context(), r.Result as LispLiteral);
-                Console.WriteLine("=> "+x?.ToString());
-                
-                r = parser.Parse("nil");
-                Console.WriteLine(r.IsOk ? r.Result.ToString() : "KO");
-                x = LispInterpreter.LispInterpreter.Interprete(new Context(), r.Result as LispLiteral);
-                Console.WriteLine("=> "+x?.ToString());
-                
-                
-                r = parser.Parse("'nil");
-                Console.WriteLine(r.IsOk ? r.Result.ToString() : "KO");
-                x = LispInterpreter.LispInterpreter.Interprete(new Context(), r.Result as LispLiteral);
-                Console.WriteLine("=> "+x?.ToString());
-                
-                r = parser.Parse(@"
+                Parser = ParserResult.Result;
+            }
+        }
+
+
+        static void Run(string source,bool debug = false)
+        {
+            Console.WriteLine();
+            Console.WriteLine(source);
+            var r = Parser.Parse(source);
+            if (debug)
+                Console.WriteLine(r.IsOk ? (r.Result as LispProgram).ToString() : "KO");
+            if (r.IsOk)
+            {
+                var x = LispInterpreter.LispInterpreter.Interprete(new Context(), r.Result as LispProgram);
+                Console.WriteLine("\t :> " + x?.ToString() + "<");
+            }
+            else
+            {
+                ;
+            }
+        }
+
+
+        static void TestInterpreteBasic()
+        {
+            Run("1");
+            Run("2.1");
+            Run("\"string\"");
+            Run("'atom");
+            Run("id");
+            Run("()");
+            Run("nil");
+            Run("'nil");
+        }
+
+        static void TestInterpretFunctions()
+        {
+            Run("( + 1.0 2.0 )");
+
+            Run("(( lambda (x) (+ x 11.0 )) 22.0)");
+
+
+            Run(@"
 (* this is Lisp comment *)
 ( ( lambda (x) (+ x 1 )) 2)");
-                Console.WriteLine(r.IsOk ? r.Result.ToString() : "KO");
-                x = LispInterpreter.LispInterpreter.Interprete(new Context(), r.Result as LispLiteral);
-                Console.WriteLine("=> "+x?.ToString());
-                
-                r = parser.Parse(@"
+            Run(@"
 (* testing print primitive *)
 ( print ""hello core.lisp world"")");
-                Console.WriteLine(r.IsOk ? r.Result.ToString() : "KO");
-                x = LispInterpreter.LispInterpreter.Interprete(new Context(), r.Result as LispLiteral);
-                Console.WriteLine("=> "+x?.ToString());
-                
-            }
+        }
+
+
+        static void TestList()
+        {
+            Run(@"(car (""a"" ""b"" ""c"" ))");
+            Run(@"(cdr (""a"" ""b"" ""c"" ))");
+            Run(@"(cons ""x"" (""a"" ""b"" ""c"" ))");
+        }
+        
+        static void TestProgram()
+        {
+            Run(@"
+(set 'variable (""a"" ""b"" ""c"" ))
+(car variable)
+");
+            Run(@"
+(set 'variable (""a"" ""b"" ""c"" ))
+(cdr variable)
+");
+            Run(@"
+(set 'variable (""a"" ""b"" ""c"" ))
+(cons ""header"" variable)
+");
+            Run(@"
+(set 'variable (""a"" ""b"" ""c"" ))
+(set 'first (lambda (x) (car x)))
+(set 'constructed (cons ""header"" variable))
+(first constructed)
+");
             
+            
+        }
+
+
+        static void Main(string[] args)
+        {
+            BuildParser();
+            //TestInterpretFunctions();
+            // TestList();
+            TestProgram();
         }
     }
 }
