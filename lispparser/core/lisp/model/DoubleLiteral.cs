@@ -8,6 +8,11 @@ namespace lispparser.core.lisp.model
         public override LispValueType Type => LispValueType.Double;
 
         private Token<LispLexer> Token;
+        
+        public override double DoubleValue => (double) Value;
+        public override int IntValue => (int)Value;
+        public override string StringValue => Value.ToString();
+        public override bool BooleanValue => Value != 0;
 
         public double Value {get; private set; }
 

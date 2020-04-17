@@ -88,7 +88,15 @@ namespace program
 (* this is Lisp comment *)
 ( ( lambda (x) (+ x 1 )) 2)");
                 Console.WriteLine(r.IsOk ? r.Result.ToString() : "KO");
+                x = LispInterpreter.LispInterpreter.Interprete(new Context(), r.Result as LispLiteral);
+                Console.WriteLine("=> "+x?.ToString());
                 
+                r = parser.Parse(@"
+(* testing print primitive *)
+( print ""hello core.lisp world"")");
+                Console.WriteLine(r.IsOk ? r.Result.ToString() : "KO");
+                x = LispInterpreter.LispInterpreter.Interprete(new Context(), r.Result as LispLiteral);
+                Console.WriteLine("=> "+x?.ToString());
                 
             }
             

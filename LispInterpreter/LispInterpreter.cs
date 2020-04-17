@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using LispInterpreter.primitives;
 using lispparser.core.lisp.model;
 
 namespace LispInterpreter

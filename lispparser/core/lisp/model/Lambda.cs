@@ -8,6 +8,10 @@ namespace lispparser.core.lisp.model
 {
     public class Lambda : LispLiteral
     {
+        public override double DoubleValue => 0.0;
+        public override int IntValue => 0;
+        public override string StringValue => null;
+        public override bool BooleanValue => true;
         public override LispValueType Type => LispValueType.Lambda;
 
         public SExpr Body { get; set; }
