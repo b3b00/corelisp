@@ -85,41 +85,58 @@ namespace program
         
         static void TestProgram()
         {
-            Run(@"
-(setq 'variable (""a"" ""b"" ""c"" ))
-(car variable)
-");
-            Run(@"
-(setq 'variable (""a"" ""b"" ""c"" ))
-(cdr variable)
-");
-            Run(@"
-(setq 'variable (""b"" ""c"" ))
-(cons ""a"" variable)
-");
-            Run(@"
-(setq 'variable (""b"" ""c"" ))
-(setq 'first (lambda (x) (car x)))
-(setq 'constructed (cons ""a"" variable))
-(first constructed)
-");
+//             Run(@"
+// (setq 'variable (""a"" ""b"" ""c"" ))
+// (car variable)
+// ");
+//             Run(@"
+// (setq 'variable (""a"" ""b"" ""c"" ))
+// (cdr variable)
+// ");
+//             Run(@"
+// (setq 'variable (""b"" ""c"" ))
+// (cons ""a"" variable)
+// ");
+//             Run(@"
+// (setq 'variable (""b"" ""c"" ))
+// (setq 'first (lambda (x) (car x)))
+// (setq 'constructed (cons ""a"" variable))
+// (first constructed)
+// ");
+//             
+//             Run(@"
+// (setq 'variable (1 2 3))
+// (setq addone (lambda (x) (* 183 x)))
+// (map addone variable)
+// ");
+//             Run(@"
+// (setq test 't)
+// (if test ""vrai"" ""faux"")");
+//             
+//             Run(@"
+// (setq vname 'x )
+// (set vname ""vautour"")
+// (print ""X"") 
+// (print  x)
+// (print ""VNAME"")
+// (print vanme)
+// ");
             
+// Run(@"
+// (setq not (lambda (x) (if x 'nil 1)))
+// (setq nun (not 1))
+// (print nun)
+// (setq nz (not 0))
+// (print nz)
+// ");
+
             Run(@"
-(setq 'variable (1 2 3))
-(setq addone (lambda (x) (* 183 x)))
-(map addone variable)
-");
-            Run(@"
-(setq test 't)
-(if test ""vrai"" ""faux"")");
-            
-            Run(@"
-(setq vname 'x )
-(set vname ""vautour"")
-(print ""X"") 
-(print  x)
-(print ""VNAME"")
-(print vanme)
+(setq not (lambda (x) (if x 'nil 1)))
+( setq facto (lambda (x) (if (not x) (1) ( * x  (facto  ( - x  1 ) )  ) )))
+(setq factoun (facto 1))
+(print factoun)
+( setq factocinq ( facto 5 ) )
+( print facto cinq )
 ");
 
         }
