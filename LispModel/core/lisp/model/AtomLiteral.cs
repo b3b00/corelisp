@@ -16,6 +16,11 @@ namespace lispparser.core.lisp.model
 
         public string Value { get; private set; }
 
+        public AtomLiteral(string value)
+        {
+            Value = value;
+        }
+        
         public AtomLiteral(Token<LispLexer> token)
         {
             Token = token;

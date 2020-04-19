@@ -4,29 +4,6 @@ using lispparser.core.lisp.model;
 
 namespace LispInterpreter
 {
-
-    public class LispRuntimeFunction : LispLiteral
-    {
-        public override LispValueType Type { get; set; } = LispValueType.Function;
-        public override double DoubleValue => 0.0;
-        public override int IntValue => 0;
-        public override string StringValue => null;
-        public override bool BooleanValue => false;
-        
-        public LispFunction Function { get; set; }
-
-        public LispRuntimeFunction(LispFunction function)
-        {
-            Function = function;
-        }
-
-        public LispLiteral Apply(Context context, params LispLiteral[] args)
-        {
-            return Function(context, args);
-        }
-
-    }
-    
     public class Context
     {
         public Context Parent { get; set; }
@@ -50,6 +27,10 @@ namespace LispInterpreter
 
         public LispLiteral Get(string name)
         {
+            if (name == null)
+            {
+                return NilLiteral.Instance;
+            }
             if (Scope.ContainsKey(name))
             {
                 return Scope[name];

@@ -105,20 +105,74 @@ namespace LispInterpreter.primitives
         
         public static LispLiteral If(Context context, params LispLiteral[] args)
         {
-            var evaluatedArgs = EvalArgs(context, args.ToList());
-            if (evaluatedArgs.Count != 3)
+            if (args.Length != 3)
             {
-                throw new LispPrimitiveBadArgNumber("IF",3,evaluatedArgs.Count);
-            }
-            
-            if (evaluatedArgs[0].BooleanValue)
-            {
-                return evaluatedArgs[1];
+                throw new LispPrimitiveBadArgNumber("IF",3,args.Length);
             }
 
-            return evaluatedArgs[2];
+            var condition = EvalArg(context, args[0]);
+            if (condition.BooleanValue)
+            {
+                //Console.WriteLine("\tif return then : "+evaluatedArgs[1]);
+                return EvalArg(context,args[1]);
+            }
+            //Console.WriteLine("\tif return else : "+evaluatedArgs[2]);
+            return EvalArg(context,args[2]);
         }
 
+        public static LispLiteral Cond(Context context, params LispLiteral[] args)
+        {
+            if (args.Length < 1)
+            {
+                throw new LispPrimitiveBadArgNumber("COND",1,args.Length);
+            }
+
+            LispLiteral result = null;
+            int i = 0;
+            while (i < args.Length && result == null)
+            {
+                if (args[i] is SExpr cond)
+                {
+                    var condition = EvalArg(context, cond.Head);
+                    if (condition.BooleanValue)
+                    {
+                        result = EvalArg(context, cond.Tail.First());
+                    }
+                }
+
+                i++;
+            }
+
+            if (result == null)
+                result = NilLiteral.Instance;
+            return result;
+        }
+
+
+        public static LispLiteral Eq(Context context, params LispLiteral[] args)
+        {
+            var evaluatedArgs =  EvalArgs(context, args.ToList());
+            if (evaluatedArgs.Count != 2)
+            {
+                throw new LispPrimitiveBadArgNumber("EQ", 2, evaluatedArgs.Count);
+            }
+
+            var v1 = evaluatedArgs[0];
+            var v2 = evaluatedArgs[1];
+            if (v1.Type != LispValueType.Sexpr && v2.Type != LispValueType.Sexpr)
+            {
+                if (v1.Type == v2.Type)
+                {
+                    if (v1.ToString() == v2.ToString())
+                    {
+                        return new AtomLiteral("t");
+                    }
+                }
+            }
+            return NilLiteral.Instance;
+        }
+        
+        
         public static LispLiteral Print(Context context, params LispLiteral[] args)
         {
             var evaluatedArgs = EvalArgs(context, args.ToList());
@@ -139,7 +193,15 @@ namespace LispInterpreter.primitives
             }
             
             LispLiteral v1 = args[0];
+            if (args[1].Type == LispValueType.Sexpr)
+            {
+                //Console.WriteLine($"will call function {args[1]}");
+            }
             LispLiteral v2 = EvalArg(context, args[1]);
+            if (v2 is LispRuntimeFunction r)
+            {
+                r.Name = v1.StringValue;
+            }
            
 
             if (v1.Type != LispValueType.Atom && v1.Type != LispValueType.Identifier)
@@ -358,18 +420,20 @@ namespace LispInterpreter.primitives
 
         public static Dictionary<string, LispRuntimeFunction> Primitives = new Dictionary<string, LispRuntimeFunction>()
         {
-            {"car", new LispRuntimeFunction(PrimitiveLibrary.Car)},
-            {"cdr",  new LispRuntimeFunction(PrimitiveLibrary.Cdr)},
-            {"cons",  new LispRuntimeFunction(PrimitiveLibrary.Cons)},
-            {"print",  new LispRuntimeFunction(PrimitiveLibrary.Print)},
-            {"setq",  new LispRuntimeFunction(PrimitiveLibrary.SetQ)},
-            {"set",  new LispRuntimeFunction(PrimitiveLibrary.Set)},
-            {"map",  new LispRuntimeFunction(PrimitiveLibrary.Map)},
-            {"+",new LispRuntimeFunction(PrimitiveLibrary.Add)},
-            {"-",new LispRuntimeFunction(PrimitiveLibrary.Substract)},
-            {"*",new LispRuntimeFunction(PrimitiveLibrary.Multiply)},
-            {"/",new LispRuntimeFunction(PrimitiveLibrary.Divide)},
-            {"if",new LispRuntimeFunction(PrimitiveLibrary.If)}
+            {"car", new LispRuntimeFunction(PrimitiveLibrary.Car,"car")},
+            {"cdr",  new LispRuntimeFunction(PrimitiveLibrary.Cdr,"cdr")},
+            {"cons",  new LispRuntimeFunction(PrimitiveLibrary.Cons,"cons")},
+            {"print",  new LispRuntimeFunction(PrimitiveLibrary.Print,"print")},
+            {"setq",  new LispRuntimeFunction(PrimitiveLibrary.SetQ,"setq")},
+            {"set",  new LispRuntimeFunction(PrimitiveLibrary.Set,"set")},
+            {"map",  new LispRuntimeFunction(PrimitiveLibrary.Map,"map")},
+            {"+",new LispRuntimeFunction(PrimitiveLibrary.Add,"add")},
+            {"-",new LispRuntimeFunction(PrimitiveLibrary.Substract,"sub")},
+            {"*",new LispRuntimeFunction(PrimitiveLibrary.Multiply,"mul")},
+            {"/",new LispRuntimeFunction(PrimitiveLibrary.Divide,"div")},
+            {"if",new LispRuntimeFunction(PrimitiveLibrary.If,"if")},
+            {"eq",new LispRuntimeFunction(PrimitiveLibrary.Eq,"eq")},
+            {"cond",new LispRuntimeFunction(PrimitiveLibrary.Cond,"cond")}
         };
 
     }
