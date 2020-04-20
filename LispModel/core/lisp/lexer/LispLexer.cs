@@ -31,7 +31,7 @@ namespace core.lisp.lexer
         
         [Lexeme(GenericToken.Int)]  INT = 16 ,
         
-        [MultiLineComment("{*","*}")]
+        [MultiLineComment("#|","|#")]
         COMMENT=100
 
 
