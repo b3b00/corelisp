@@ -27,7 +27,7 @@ namespace LispInterpreter
         public static LispLiteral DebugArg(LispLiteral lit, Context context)
         {
             var val = context.Get(lit.StringValue);
-            if ((lit.Type == LispValueType.Identifier || lit.Type == LispValueType.Atom) && val != null)
+            if ((lit.Type == LispValueType.Symbol) && val != null)
             {
                 return val;
             }
@@ -112,7 +112,7 @@ namespace LispInterpreter
 
                 var scope = new Dictionary<string, LispLiteral>();
                 int i = 0;
-                foreach (IdentifierLiteral parameter in lambda.Parameters)
+                foreach (SymbolLiteral parameter in lambda.Parameters)
                 {
                     scope[parameter.Value] = evaluatedArgs[i];
                     i++;
@@ -157,7 +157,7 @@ namespace LispInterpreter
                 return InterpreteSExpr(context, sexpr);
             }
 
-            if (literal is IdentifierLiteral id)
+            if (literal is SymbolLiteral id)
             {
                 var eval = context.Get(id.Value);
                 return eval;
@@ -173,7 +173,7 @@ namespace LispInterpreter
 
         public static LispLiteral InterpreteSExpr(Context context, SExpr sexpr)
         {
-            if (sexpr.Head is IdentifierLiteral id)
+            if (sexpr.Head is SymbolLiteral id)
             {
                 if (context.Get(id.Value) is LispRuntimeFunction runtimeFunction)
                 {

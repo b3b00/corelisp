@@ -72,7 +72,9 @@ namespace LispInterpreter.primitives
             {"/",new LispRuntimeFunction(Math.Divide,"div")},
             {"if",new LispRuntimeFunction(If.IF,"if")},
             {"eq",new LispRuntimeFunction(Eq.EQ,"eq")},
-            {"cond",new LispRuntimeFunction(Cond.COND,"cond")}
+            {"cond",new LispRuntimeFunction(Cond.COND,"cond")},
+            {"quote",new LispRuntimeFunction(Quote.QUOTE,"quote")},
+            {"atom",new LispRuntimeFunction(Atom.ATOM,"atom")}
         };
 
     }

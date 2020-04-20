@@ -22,7 +22,7 @@ namespace LispInterpreter.primitives
                 {
                     if (v1.ToString() == v2.ToString())
                     {
-                        return new AtomLiteral("t");
+                        return new SymbolLiteral("t");
                     }
                 }
             }

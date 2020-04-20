@@ -25,16 +25,14 @@ namespace LispInterpreter.primitives
             }
            
 
-            if (v1.Type != LispValueType.Atom && v1.Type != LispValueType.Identifier)
+            if (v1.Type != LispValueType.Symbol)
             {
-                throw new LispPrimitiveBadArgType("SETQ",1,LispValueType.Atom,args[0].Type);
+                throw new LispPrimitiveBadArgType("SETQ",1,LispValueType.Symbol,args[0].Type);
             }
 
-            if (v1 is AtomLiteral atom)
-                context.Set(atom.Value, v2);
-            if (v1 is IdentifierLiteral id)
-                context.Set(id.Value, v2);
-            
+            if (v1 is SymbolLiteral symbol)
+                context.Set(symbol.Value, v2);
+
             return NilLiteral.Instance;
         }
         
@@ -50,15 +48,14 @@ namespace LispInterpreter.primitives
             LispLiteral v2 = evaluatedArgs[1];
             
 
-            if (v1.Type != LispValueType.Atom && v1.Type != LispValueType.Identifier)
+            if (v1.Type != LispValueType.Symbol )
             {
-                throw new LispPrimitiveBadArgType("SET",1,LispValueType.Atom,args[0].Type);
+                throw new LispPrimitiveBadArgType("SET",1,LispValueType.Symbol,args[0].Type);
             }
 
-            if (v1 is AtomLiteral atom)
-                context.Set(atom.Value, v2);
-            if (v1 is IdentifierLiteral id)
-                context.Set(id.Value, v2);
+            
+            if (v1 is SymbolLiteral symbol)
+                context.Set(symbol.Value, v2);
             
             return NilLiteral.Instance;
         }

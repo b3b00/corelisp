@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LispInterpreter", "LispInte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LispModel", "LispModel\LispModel.csproj", "{64B0E809-43C9-41F4-815A-777F10B87380}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreLispTests", "CoreLispTests\CoreLispTests.csproj", "{285F2083-33F9-4AB8-9FFF-B92591802CF9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,5 +88,17 @@ Global
 		{64B0E809-43C9-41F4-815A-777F10B87380}.Release|x64.Build.0 = Release|Any CPU
 		{64B0E809-43C9-41F4-815A-777F10B87380}.Release|x86.ActiveCfg = Release|Any CPU
 		{64B0E809-43C9-41F4-815A-777F10B87380}.Release|x86.Build.0 = Release|Any CPU
+		{285F2083-33F9-4AB8-9FFF-B92591802CF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{285F2083-33F9-4AB8-9FFF-B92591802CF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{285F2083-33F9-4AB8-9FFF-B92591802CF9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{285F2083-33F9-4AB8-9FFF-B92591802CF9}.Debug|x64.Build.0 = Debug|Any CPU
+		{285F2083-33F9-4AB8-9FFF-B92591802CF9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{285F2083-33F9-4AB8-9FFF-B92591802CF9}.Debug|x86.Build.0 = Debug|Any CPU
+		{285F2083-33F9-4AB8-9FFF-B92591802CF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{285F2083-33F9-4AB8-9FFF-B92591802CF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{285F2083-33F9-4AB8-9FFF-B92591802CF9}.Release|x64.ActiveCfg = Release|Any CPU
+		{285F2083-33F9-4AB8-9FFF-B92591802CF9}.Release|x64.Build.0 = Release|Any CPU
+		{285F2083-33F9-4AB8-9FFF-B92591802CF9}.Release|x86.ActiveCfg = Release|Any CPU
+		{285F2083-33F9-4AB8-9FFF-B92591802CF9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

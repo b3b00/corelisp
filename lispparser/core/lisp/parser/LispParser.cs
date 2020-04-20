@@ -31,26 +31,16 @@ namespace lispparser.core.lisp.parser
         {
             return new StringLiteral(token); 
         }
+       
         
-        [Production("literal : ATOM")]
-        public ILisp atomLiteral(Token<LispLexer> token)
-        {
-            var atom = new AtomLiteral(token);
-            if (atom.Value == NilLiteral.Nil)
-            {
-                return NilLiteral.Instance;
-            }
-            return atom;
-        }
-        
-        [Production("literal : IDENTIFIER")]
-        public ILisp identifierLiteral(Token<LispLexer> token)
+        [Production("literal : SYMBOL")]
+        public ILisp symbolLiteral(Token<LispLexer> token)
         {
             if (token.Value == NilLiteral.Nil)
             {
                 return NilLiteral.Instance;
             }
-            return new IdentifierLiteral(token); 
+            return new SymbolLiteral(token); 
         }
 
         [Production("literal : sexpr")]
@@ -71,10 +61,10 @@ namespace lispparser.core.lisp.parser
             return new LispProgram(statements.Cast<LispLiteral>().ToList());
         }
         
-        [Production("lambda:LPAREN[d] LAMBDA[d] LPAREN[d] IDENTIFIER* RPAREN[d] sexpr RPAREN[d]")]
+        [Production("lambda:LPAREN[d] LAMBDA[d] LPAREN[d] SYMBOL* RPAREN[d] sexpr RPAREN[d]")]
         public ILisp lambda(List<Token<LispLexer>> parameters, SExpr sexpr)
         {
-            return new Lambda(parameters.Select(x => new IdentifierLiteral(x)).ToList<LispLiteral>(), sexpr);
+            return new Lambda(parameters.Select(x => new SymbolLiteral(x)).ToList<LispLiteral>(), sexpr);
         }
 
         [Production("sexpr : LPAREN[d] [literal|operator]* RPAREN[d]")]
@@ -85,6 +75,12 @@ namespace lispparser.core.lisp.parser
                 return NilLiteral.Instance;
             }
             return new SExpr(expr.Cast<LispLiteral>().ToList());
+        }
+
+        [Production("literal : QUOTE[d] literal")]
+        public ILisp Quote(ILisp literal)
+        {
+            return new SExpr(new SymbolLiteral("quote"), literal as LispLiteral);
         }
         
         
