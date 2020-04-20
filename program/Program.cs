@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using core.lisp.lexer;
 using LispInterpreter;
 using lispparser.core.lisp.model;
@@ -23,12 +24,25 @@ namespace program
             }
         }
 
-
-        static void Run(string source,bool debug = false)
+        static void LispInLisp()
         {
-            Console.WriteLine();
-            Console.WriteLine(source);
-            
+            string source = File.ReadAllText("lisp.lisp");
+            BuildParser();
+            var r = Run(source);
+            ;
+        }
+
+
+        static LispLiteral Run(string source,bool debug = false)
+        {
+            var r = Parser.Parse(source);
+            if (r.IsError)
+            {
+                r.Errors.ForEach(e => Console.WriteLine(e.ErrorMessage));
+                return null;
+            }
+            var x = LispInterpreter.LispInterpreter.Interprete(new Context(), r.Result as LispProgram);
+            return x;
         }
 
 
@@ -53,7 +67,7 @@ namespace program
         static void Main(string[] args)
         {
             BuildParser();
-            TestProgram();
+            LispInLisp();
         }
     }
 }
