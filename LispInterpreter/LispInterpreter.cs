@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using LispInterpreter.primitives;
 using lispparser.core.lisp.model;
-using sly.parser.generator;
 
 namespace LispInterpreter
 {
     public class LispInterpreter
     {
 
+        #region debugging 
         public static bool Debug = false;
         public static string getTab()
         {
@@ -88,6 +88,9 @@ namespace LispInterpreter
             Console.WriteLine("}");
         }
         
+        #endregion
+        
+        #region arguments evaluation
 
         public static LispLiteral EvalArg(Context context, LispLiteral arg)
         {
@@ -99,39 +102,22 @@ namespace LispInterpreter
             return args.Select(x => EvalArg(context,x)).ToList();
         }
         
-        public static LispRuntimeFunction GetLambda(Context lambdaContext, Lambda lambda)
-        {
-            LispFunction function = (Context context, LispLiteral[] args) =>
-            {
-                
-                var evaluatedArgs = EvalArgs(context, args.ToList());
-                if (lambda.Parameters.Count > evaluatedArgs.Count)
-                {
-                    throw new Exception("ouch : not enough arguments for lambda " + lambda);
-                }
+        
+        #endregion
 
-                var scope = new Dictionary<string, LispLiteral>();
-                int i = 0;
-                foreach (SymbolLiteral parameter in lambda.Parameters)
-                {
-                    scope[parameter.Value] = evaluatedArgs[i];
-                    i++;
-                }
 
-                var scopedContext = new Context(scope, context);
-                var result = LispInterpreter.Interprete(scopedContext, lambda.Body);
-                return result;
-            };
-            var lfunction = new LispRuntimeFunction(function);
-            lfunction.IsLambda = true;
-            return lfunction;
-        }
+        #region  interprete
 
+        
 
         public static LispLiteral Interprete(Context context, LispProgram program)
         {
             if (program.Statements.Any())
             {
+                if (!program.IsCompiled)
+                {
+                    program = LambdaCompiler.CompileLambdas(context,program);
+                }
                 LispLiteral t = null; 
                 foreach (var statement in program.Statements)
                 {
@@ -165,42 +151,73 @@ namespace LispInterpreter
 
             if (literal is LispRuntimeFunction f)
             {
-                return NilLiteral.Instance;
+                return f;
             }
 
             return literal;
         }
 
-        public static LispLiteral InterpreteSExpr(Context context, SExpr sexpr)
+        public static LispLiteral InterpreteSExpr(Context context, SExpr sExpr)
         {
-            if (sexpr.Head is SymbolLiteral id)
+            if (sExpr.Head is SymbolLiteral id)
             {
                 if (context.Get(id.Value) is LispRuntimeFunction runtimeFunction)
                 {
-                    return DebugAndCall("[1]", runtimeFunction, sexpr, context);
+                    return DebugAndCall("[1]", runtimeFunction, sExpr, context);
                 }
             }
 
-            if (sexpr.Head is LispOperator oper)
+            if (sExpr.Head is LispOperator oper)
             {
                 if (context.Get(oper.Value) is LispRuntimeFunction runtimeFunction)
                 {
-                   return DebugAndCall("[2]", runtimeFunction, sexpr, context);
+                   return DebugAndCall("[2]", runtimeFunction, sExpr, context);
                 }
             }
 
-            if (sexpr.Head is Lambda lambda)
+            if (sExpr.Head is Lambda lambda)
             {
                 var l = GetLambda(context, lambda);
-                var args = sexpr.Tail;
+                var args = sExpr.Tail;
                 return l.Apply(context, args.ToArray());
             }
-            if (sexpr.Head is LispRuntimeFunction function)
+            if (sExpr.Head is LispRuntimeFunction function)
             {
-                var args = sexpr.Tail;
-                return DebugAndCall("[3]",function,sexpr,context);
+                var args = sExpr.Tail;
+                return DebugAndCall("[3]",function,sExpr,context);
             }
-            return sexpr;
+            return sExpr;
         }
+        
+        public static LispRuntimeFunction GetLambda(Context lambdaContext, Lambda lambda)
+        {
+            LispFunction function = (Context context, LispLiteral[] args) =>
+            {
+                
+                var evaluatedArgs = EvalArgs(context, args.ToList());
+                if (lambda.Parameters.Count > evaluatedArgs.Count)
+                {
+                    throw new Exception("ouch : not enough arguments for lambda " + lambda);
+                }
+
+                var scope = new Dictionary<string, LispLiteral>();
+                int i = 0;
+                foreach (SymbolLiteral parameter in lambda.Parameters)
+                {
+                    scope[parameter.Value] = evaluatedArgs[i];
+                    i++;
+                }
+
+                var scopedContext = new Context(scope, context);
+                var result = LispInterpreter.Interprete(scopedContext, lambda.Body);
+                return result;
+            };
+            var lfunction = new LispRuntimeFunction(function);
+            lfunction.IsLambda = true;
+            return lfunction;
+        }
+
+        
+        #endregion
     }
 }
