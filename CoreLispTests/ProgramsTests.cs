@@ -83,5 +83,17 @@ factocinq
             
         }
         
+        [Test]
+        public void TestDefun()
+        {
+            var r = Test(        @"
+( defun plusThirty (x) (+ 30 x) )
+( plusThirty 12)
+");
+            Assert.IsInstanceOf<IntLiteral>(r);
+            Assert.AreEqual(42, (r as IntLiteral).Value);
+            
+        }
+
     }
 }

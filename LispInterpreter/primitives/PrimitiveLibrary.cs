@@ -74,7 +74,8 @@ namespace LispInterpreter.primitives
             {"eq",new LispRuntimeFunction(Eq.EQ,"eq")},
             {"cond",new LispRuntimeFunction(Cond.COND,"cond")},
             {"quote",new LispRuntimeFunction(Quote.QUOTE,"quote")},
-            {"atom",new LispRuntimeFunction(Atom.ATOM,"atom")}
+            {"atom",new LispRuntimeFunction(Atom.ATOM,"atom")},
+            {"defun",new LispRuntimeFunction(Defun.DEFUN,"defun")}
         };
 
     }
