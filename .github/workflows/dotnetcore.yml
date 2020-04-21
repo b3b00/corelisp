@@ -28,6 +28,6 @@ jobs:
     - name: Publish NuGet
       uses: rohith/publish-nuget@v2.3.0
       with:
-        PROJECT_FILE_PATH: corelisp/corelisp.csproj
+        PROJECT_FILE_PATH: CoreLisp/CoreLisp.csproj
         NUGET_KEY: ${{secrets.NUGET_KEY}}
    
