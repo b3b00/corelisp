@@ -114,10 +114,6 @@ namespace LispInterpreter
         {
             if (program.Statements.Any())
             {
-                if (!program.IsCompiled)
-                {
-                    program = LambdaCompiler.CompileLambdas(context,program);
-                }
                 LispLiteral t = null; 
                 foreach (var statement in program.Statements)
                 {
@@ -132,12 +128,6 @@ namespace LispInterpreter
         
         public static LispLiteral Interprete(Context context, LispLiteral literal)
         {
-            
-            if (literal is Lambda lambda)
-            {
-                return GetLambda(context, lambda);
-            }
-            
             if (literal is SExpr sexpr)
             {
                 return InterpreteSExpr(context, sexpr);
@@ -166,25 +156,16 @@ namespace LispInterpreter
                     return DebugAndCall("[1]", runtimeFunction, sExpr, context);
                 }
             }
-
-            if (sExpr.Head is LispOperator oper)
-            {
-                if (context.Get(oper.Value) is LispRuntimeFunction runtimeFunction)
-                {
-                   return DebugAndCall("[2]", runtimeFunction, sExpr, context);
-                }
-            }
-
-            if (sExpr.Head is Lambda lambda)
-            {
-                var l = GetLambda(context, lambda);
-                var args = sExpr.Tail;
-                return l.Apply(context, args.ToArray());
-            }
             if (sExpr.Head is LispRuntimeFunction function)
             {
                 var args = sExpr.Tail;
                 return DebugAndCall("[3]",function,sExpr,context);
+            }
+            if (sExpr.Head is SExpr subExpr)
+            {
+                var evaluatedSubExpr = InterpreteSExpr(context, subExpr);
+                var t = new SExpr(evaluatedSubExpr, sExpr.Tail.ToArray());
+                return InterpreteSExpr(context,t);
             }
             return sExpr;
         }

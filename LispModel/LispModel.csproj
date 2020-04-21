@@ -4,8 +4,9 @@
         <TargetFramework>netstandard2.0</TargetFramework>
     </PropertyGroup>
 
+
     <ItemGroup>
-      <ProjectReference Include="..\..\csly\sly\sly.csproj" />
+      <PackageReference Include="sly" Version="2.5.0.1" />
     </ItemGroup>
 
 </Project>

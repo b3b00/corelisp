@@ -10,12 +10,6 @@ namespace lispparser.core.lisp.parser
     public class LispParser
     {
 
-        [Production("operator : [PLUS|MINUS|TIMES|DIVIDE]") ]
-        public LispLiteral lispOperator(Token<LispLexer> token)
-        {
-            return new LispOperator(token); 
-        }
-        
         [Production("literal : INT")]
         public ILisp intLiteral(Token<LispLexer> token)
         {
@@ -49,25 +43,13 @@ namespace lispparser.core.lisp.parser
             return sexpr;
         }
 
-        [Production("literal : lambda")]
-        public ILisp lambdaLiteral(Lambda lambda)
-        {
-            return lambda;
-        }
-
         [Production("root: literal*")]
         public ILisp root(List<ILisp> statements)
         {
             return new LispProgram(statements.Cast<LispLiteral>().ToList());
         }
         
-        [Production("lambda:LPAREN[d] LAMBDA[d] LPAREN[d] SYMBOL* RPAREN[d] sexpr RPAREN[d]")]
-        public ILisp lambda(List<Token<LispLexer>> parameters, SExpr sexpr)
-        {
-            return new Lambda(parameters.Select(x => new SymbolLiteral(x)).ToList<LispLiteral>(), sexpr);
-        }
-
-        [Production("sexpr : LPAREN[d] [literal|operator]* RPAREN[d]")]
+        [Production("sexpr : LPAREN[d] literal* RPAREN[d]")]
         public ILisp sexpr(List<ILisp> expr)
         {
             if (!expr.Any())

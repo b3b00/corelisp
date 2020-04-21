@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using lispparser.core.lisp.model;
+using static LispInterpreter.primitives.PrimitiveLibrary;
 
 namespace LispInterpreter.primitives
 {
@@ -10,10 +11,7 @@ namespace LispInterpreter.primitives
         public static LispLiteral CONS(Context context, params LispLiteral[] args)
         {
             var evaluatedArgs = EvalArgs(context, args.ToList());
-            if (evaluatedArgs.Count != 2)
-            {
-                throw new LispPrimitiveBadArgNumber("CONS",2,evaluatedArgs.Count);
-            }
+           AssertArgNumber("cons",args,2);
 
             List<LispLiteral> cons = new List<LispLiteral>();
             cons.Add(evaluatedArgs[0]);

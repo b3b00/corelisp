@@ -29,7 +29,6 @@ namespace CoreLispTests
         public void IntLambdaTest()
         {
             var r = Test(@"
-{* this is Lisp comment *}
 ( ( lambda (x) (* x 11 )) 2)");
             Assert.IsInstanceOf<IntLiteral>(r);
             Assert.AreEqual(22, (r as IntLiteral).Value);

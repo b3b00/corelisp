@@ -1,35 +1,30 @@
 ﻿using System;
+using System.IO;
 using core.lisp.lexer;
 using LispInterpreter;
 using lispparser.core.lisp.model;
 using lispparser.core.lisp.parser;
 using sly.parser;
 using sly.parser.generator;
-
+using coreLisp;
 
 namespace program
 {
     class Program
     {
-        private static Parser<LispLexer, ILisp> Parser = null;
+        private static CoreLisp coreLisp = new CoreLisp();
 
-        static void BuildParser()
+       
+
+        static void LispInLisp()
         {
-            ParserBuilder<LispLexer, ILisp> builder = new ParserBuilder<LispLexer, ILisp>();
-            var ParserResult = builder.BuildParser(new LispParser(), ParserType.EBNF_LL_RECURSIVE_DESCENT, "root");
-            if (ParserResult.IsOk)
-            {
-                Parser = ParserResult.Result;
-            }
+            string source = File.ReadAllText("lisp.lisp");
+            var r = coreLisp.Run("(atom 'ttt)");
+            ;
         }
 
 
-        static void Run(string source,bool debug = false)
-        {
-            Console.WriteLine();
-            Console.WriteLine(source);
-            
-        }
+        
 
 
         
@@ -37,7 +32,7 @@ namespace program
         {
             
             
-            Run(@"
+            coreLisp.Run(@"
 (setq vname 'x )
 (set vname ""vautour"")
 (print ""X"") 
@@ -52,8 +47,7 @@ namespace program
 
         static void Main(string[] args)
         {
-            BuildParser();
-            TestProgram();
+            LispInLisp();
         }
     }
 }

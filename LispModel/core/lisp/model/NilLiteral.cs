@@ -14,8 +14,6 @@ namespace lispparser.core.lisp.model
         public const string Nil = "nil";
         public override LispValueType Type => LispValueType.Nil;
 
-        private Token<LispLexer> Token;
-
         public string Value { get; private set; }
         
         
