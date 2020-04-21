@@ -11,9 +11,24 @@ namespace LispInterpreter.primitives
         {
             var evaluatedArgs = EvalArgs(context, args.ToList());
             AssertArgNumber("car",evaluatedArgs.ToArray(),1);
-            AssertArgType("atom",evaluatedArgs.ToArray(),0,LispValueType.Sexpr);
 
-            return (evaluatedArgs[0] as SExpr).Head;
+            if (evaluatedArgs.First().Type == LispValueType.Nil)
+            {
+                return NilLiteral.Instance;
+            }
+            
+            
+            AssertArgType("car",evaluatedArgs.ToArray(),0,LispValueType.Sexpr);
+
+            if (evaluatedArgs.Any())
+            {
+                var expr = evaluatedArgs[0] as SExpr;
+                if (expr.BooleanValue)
+                    return (evaluatedArgs[0] as SExpr).Head;
+                return NilLiteral.Instance;
+                ;
+            }
+            return NilLiteral.Instance;
 
         }
     }
