@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\CoreLisp\CoreLisp.csproj" />
     <ProjectReference Include="..\LispInterpreter\LispInterpreter.csproj" />
     <ProjectReference Include="..\LispModel\LispModel.csproj" />
     <ProjectReference Include="..\lispparser\lispparser.csproj" />

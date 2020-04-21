@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\LispInterpreter\LispInterpreter.csproj" />
+      <ProjectReference Include="..\LispModel\LispModel.csproj" />
+      <ProjectReference Include="..\lispparser\lispparser.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="sly" Version="2.5.0" />
+    </ItemGroup>
+
+</Project>
