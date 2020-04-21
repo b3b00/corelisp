@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\..\csly\sly\sly.csproj" />
     <ProjectReference Include="..\LispInterpreter\LispInterpreter.csproj" />
     <ProjectReference Include="..\LispModel\LispModel.csproj" />
     <ProjectReference Include="..\lispparser\lispparser.csproj" />
@@ -12,6 +11,10 @@
     <Content Include="lisp.lisp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="sly" Version="2.5.0" />
   </ItemGroup>
 
   <PropertyGroup>

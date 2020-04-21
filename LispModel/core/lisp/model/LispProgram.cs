@@ -23,7 +23,7 @@ namespace lispparser.core.lisp.model
             Statements.Add(statement);
         }
 
-        public string ToString()
+        public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
             builder.AppendLine("(");

@@ -5,8 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\csly\sly\sly.csproj" />
     <ProjectReference Include="..\LispModel\LispModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="sly" Version="2.5.0" />
   </ItemGroup>
 
 
