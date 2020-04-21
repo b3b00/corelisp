@@ -25,8 +25,9 @@ jobs:
       run: dotnet test CoreLispTests/CoreLispTests.csproj --no-restore --verbosity normal
     - name: Pack
       run: dotnet pack -c Release 
-    - name: uploadNuget 
-      uses: actions/upload-artifact@v1
+    - name: Publish NuGet
+      uses: rohith/publish-nuget@v2.3.0
       with:
-        name: corelisp.nupkg
-        path: corelisp/bin/Release/corelisp*.nupkg
+        PROJECT_FILE_PATH: corelisp/corelisp.csproj
+        NUGET_KEY: ${{secrets.NUGET_KEY}}
+   
