@@ -49,7 +49,7 @@
 
 
 
-(defun eval (exp env)
+#|(defun eval (exp env)
 	(cond
 		((atom exp) 
 			(assoc exp env))
@@ -76,15 +76,20 @@
 			(eval (caddar exp) (append (pair (cadar exp) (listeval (cdr exp) env)) env)))
 	)
 )
+|#
 
 
-(defun listeval (args env)
-	(cond 
-		((null args) '())
-		('t (cons 
-			(eval (car args) env)
-			(listeval (cdr args) env)))
+(defun eval (exp env)
+	(cond
+		((atom exp) 
+			(assoc exp env))		
+		((eq (caar exp) 'defun)
+			(eval (cons (caddar exp) (cdr exp)) (cons (list (cadar exp) (car exp)) env)))
+		((eq (caar exp) 'lambda)
+			(eval (caddar exp) (append (pair (cadar exp) (listeval (cdr exp) env)) env)))
+		#|((eq (caar exp) 'lambda) 
+			(eval (caddar exp) (append (pair (cadar exp) (listeval (cdr exp) env)) env)))|#
 	)
 )
 
-(eval '(car ("a" "b" "c")))
+(eval '(car ("a" "b" "c")) (pair('t 'h 'h 'l) ('j 'p 'y 'o)))
