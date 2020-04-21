@@ -24,7 +24,7 @@ jobs:
     - name: Test
       run: dotnet test CoreLispTests/CoreLispTests.csproj --no-restore --verbosity normal
     - name: Pack
-      run: dotnet pack -c Release corelisp/CoreLisp.csproj
+      run: dotnet pack corelisp/CoreLisp.csproj
     - name: uploadNuget 
       uses: actions/upload-artifact@v1
       with:
