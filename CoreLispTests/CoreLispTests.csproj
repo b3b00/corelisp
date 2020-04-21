@@ -10,10 +10,11 @@
         <PackageReference Include="nunit" Version="3.12.0" />
         <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
-        <PackageReference Include="sly" Version="2.5.0" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\csly\sly\sly.csproj" />
+      <ProjectReference Include="..\CoreLisp\CoreLisp.csproj" />
       <ProjectReference Include="..\LispInterpreter\LispInterpreter.csproj" />
       <ProjectReference Include="..\LispModel\LispModel.csproj" />
       <ProjectReference Include="..\lispparser\lispparser.csproj" />

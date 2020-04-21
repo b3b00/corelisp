@@ -156,14 +156,6 @@ namespace LispInterpreter
                     return DebugAndCall("[1]", runtimeFunction, sExpr, context);
                 }
             }
-
-            if (sExpr.Head is LispOperator oper)
-            {
-                if (context.Get(oper.Value) is LispRuntimeFunction runtimeFunction)
-                {
-                   return DebugAndCall("[2]", runtimeFunction, sExpr, context);
-                }
-            }
             if (sExpr.Head is LispRuntimeFunction function)
             {
                 var args = sExpr.Tail;

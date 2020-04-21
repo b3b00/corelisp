@@ -13,17 +13,15 @@ namespace core.lisp.lexer
         [Lexeme(GenericToken.SugarToken, "(")] LPAREN = 1,
         [Lexeme(GenericToken.SugarToken, ")")] RPAREN = 2,
 
-        [Lexeme(GenericToken.SugarToken, "+")] PLUS = 3,
-        [Lexeme(GenericToken.SugarToken, "-")] MINUS = 4,
-        [Lexeme(GenericToken.SugarToken, "/")] DIVIDE = 5,
-        [Lexeme(GenericToken.SugarToken, "*")] TIMES = 6,
+       
         [Lexeme(GenericToken.SugarToken, "'")] QUOTE = 7,
 
 
         // 11 -> 20 : literals
         [Lexeme(GenericToken.Double)] DOUBLE = 11,
 
-        [Lexeme(GenericToken.Identifier,IdentifierType.Alpha)] SYMBOL = 12,
+        //[Lexeme(GenericToken.Identifier,IdentifierType.Alpha)] 
+        [Lexeme(GenericToken.Extension)]SYMBOL = 12,
 
         // [Lexeme(GenericToken.KeyWord,"lambda")]  LAMBDA = 13 ,
 

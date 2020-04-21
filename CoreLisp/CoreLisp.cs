@@ -2,6 +2,7 @@
 using System.IO;
 using core.lisp.lexer;
 using LispInterpreter;
+using lispparser.core.lisp.lexer;
 using lispparser.core.lisp.model;
 using lispparser.core.lisp.parser;
 using sly.parser;
@@ -23,7 +24,7 @@ namespace coreLisp
         private void BuildParser()
         {
             ParserBuilder<LispLexer, ILisp> builder = new ParserBuilder<LispLexer, ILisp>();
-            var ParserResult = builder.BuildParser(new LispParser(), ParserType.EBNF_LL_RECURSIVE_DESCENT, "root");
+            var ParserResult = builder.BuildParser(new LispParser(), ParserType.EBNF_LL_RECURSIVE_DESCENT, "root",SymbolLexerExtension.SymbolExtension);
             if (ParserResult.IsOk)
             {
                 Parser = ParserResult.Result;

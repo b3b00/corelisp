@@ -16,7 +16,8 @@ namespace LispInterpreter.primitives
                 throw new LispPrimitiveBadArgNumber("ATOM",1,args.Length);
             }
 
-            if (args[0].Type == LispValueType.Sexpr)
+            var arg0 = EvalArg(context, args[0]);
+            if (arg0.Type == LispValueType.Sexpr)
             {
                 return NilLiteral.Instance;
             }

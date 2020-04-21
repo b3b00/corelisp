@@ -74,7 +74,7 @@ namespace CoreLispTests
         [Test]
         public void AtomPrimitiveTest()
         {
-            var r = Test("atom 't");
+            var r = Test("(atom 't)");
             Assert.IsInstanceOf<SymbolLiteral>(r);
             Assert.True(r.BooleanValue);
 

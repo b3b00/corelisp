@@ -19,7 +19,7 @@ namespace program
         static void LispInLisp()
         {
             string source = File.ReadAllText("lisp.lisp");
-            var r = coreLisp.Run(source);
+            var r = coreLisp.Run("(atom 'ttt)");
             ;
         }
 
