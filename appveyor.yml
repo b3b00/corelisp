@@ -24,7 +24,7 @@ build_script:
 
 
 after_build:
-  - ps: dotnet pack -c $env:CONFIGURATION sly
+  - ps: dotnet pack -c $env:CONFIGURATION corelisp
 
 
 # Run coverage on Windows
@@ -42,8 +42,8 @@ after_test:
 
 
 artifacts:
-  - path: sly/bin/$(CONFIGURATION)/*.nupkg
-    name: sly
+  - path: corelisp/bin/$(CONFIGURATION)/*.nupkg
+    name: corelisp
 
 
 # Deploy nuget package from Windows
