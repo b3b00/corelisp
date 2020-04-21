@@ -8,7 +8,7 @@ namespace lispparser.core.lisp.model
         
         public override double DoubleValue => 0.0;
         public override int IntValue => 0;
-        public override string StringValue => Value.ToString();
+        public override string StringValue => "nil";
         public override bool BooleanValue => false;
         
         public const string Nil = "nil";

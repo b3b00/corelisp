@@ -1,4 +1,5 @@
 ﻿
+
 (defun cadr (x) (car (cdr x))
 )
 
@@ -18,6 +19,13 @@
 		)
 )
 
+
+(defun list (x y z) 
+	(cons x (cons y (cons z ())))
+)
+
+
+
 (defun pair (x y)
 	(cond 
 	    ((and (null x) (null y)) '())
@@ -36,26 +44,32 @@
 
 (defun assoc (x y)
     (cond 
+    	((null y) 'nil)
         ((eq x (caar y)) (cadar y))
         ('t (assoc x (cdr y))))
 )
 
-(setq asso '((a b) (c d) (e f)))
-(assoc 'a asso)
 
 (defun null (x)
 	(eq x '())
 )
 
 
+(defun evalAtom (exp env)
+	(assoc exp env)
+)
 
+(defun evalDefun (exp env)
+	(eval (cons (caddar exp) (cdr exp)) (cons (list (cadar exp) (car exp)) env))
+)
 
-(defun eval (exp env)
-	(cond
-		((atom exp) 
-			(assoc exp env))
-		((atom (car exp))
-			(cond 
+(defun evalLambda (exp env)
+	(eval (caddar exp) (append (pair (cadar exp) (listeval (cdr exp) env)) env))
+)
+
+(defun evalApply (exp env)
+(
+(cond 
 				((eq 'quote (car exp)) 
 					(cadr exp))
 				((eq 'atom (car exp)) 
@@ -70,28 +84,45 @@
 					(cons (eval (cadr exp) env) (eval (caddr exp) env)))
 				((eq 'cond (car exp)) 
 					(condeval (cdr exp) env))
-				('t (eval (cons (assoc (car exp) env) (cdr exp)) env))))
+				('t (eval (cons (assoc (car exp) env) (cdr exp)) env)))
+	)
+
+
+) 
+
+(defun eval (exp env)
+	(cond
+		((atom exp) 
+			(evalAtom exp env)
+		)
+		((atom (car exp))
+			(evalApply exp env)
+		)
 		((eq (caar exp) 'defun)
-			(eval (cons (caddar exp) (cdr exp)) (cons (list (cadar exp) (car exp)) env)))
+			(evalDefun exp env)
+		)
 		((eq (caar exp) 'lambda)
-			(eval (caddar exp) (append (pair (cadar exp) (listeval (cdr exp) env)) env)))
+			(evalLambda exp env)
+		)
 	)
 )
 
 
 #|
-(defun eval (exp env)
-	(cond
-		((atom exp) 
-			(assoc exp env))		
-		((eq (caar exp) 'defun)
-			(eval (cons (caddar exp) (cdr exp)) (cons (list (cadar exp) (car exp)) env)))
-		((eq (caar exp) 'lambda)
-			(eval (caddar exp) (append (pair (cadar exp) (listeval (cdr exp) env)) env)))
-		#|((eq (caar exp) 'lambda) 
-			(eval (caddar exp) (append (pair (cadar exp) (listeval (cdr exp) env)) env)))|#
-	)
-)
-|#
-
+(setq evA
 (eval '(car ("a" "b" "c")) (pair('t 'h 'h 'l) ('j 'p 'y 'o)))
+)
+(print evA)
+(setq env (pair ('a 'b) (12 28))) 
+|#
+(setq envenv '((a (12 13 14) (b 28))))
+
+#| (setq evB
+	(eval '(cdr b) envenv)
+)
+(print evB)
+evB |#
+
+(assoc 'b  ((a (12 13 14) ('b 28))))
+(print b)
+

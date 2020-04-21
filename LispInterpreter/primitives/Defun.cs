@@ -14,9 +14,11 @@ namespace LispInterpreter.primitives
             AssertArgType("defun",args,1,LispValueType.Sexpr);
             AssertArgType("defun",args,2,LispValueType.Sexpr);
 
+            string functionName = (args[0] as SymbolLiteral).Value;
             var lambda = new Lambda((args[1] as SExpr).Elements, args[2] as SExpr);
-            var runtimeFunction = LispInterpreter.GetLambda(context,lambda);
-            context.Set((args[0] as SymbolLiteral).Value, runtimeFunction);
+            var runtimeFunction = LispInterpreter.GetLambda(context,lambda,functionName);
+            runtimeFunction.Name = functionName;
+            context.Set(functionName, runtimeFunction);
             return runtimeFunction;
         }
     }

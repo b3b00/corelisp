@@ -32,7 +32,7 @@ namespace LispInterpreter.primitives
             }
            
             var lambda = new Lambda((args[0] as SExpr).Elements, args[1] as SExpr);
-            return GetLambda(context, lambda);
+            return GetLambda(context, lambda,"anon");
         }
     }
 }

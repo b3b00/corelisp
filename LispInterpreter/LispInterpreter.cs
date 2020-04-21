@@ -12,7 +12,8 @@ namespace LispInterpreter
     {
 
         #region debugging 
-        public static bool Debug = false;
+        public static bool DebugLambda = true;
+        public static bool DebugAll = false;
         public static string getTab()
         {
             string tab = "";
@@ -35,41 +36,44 @@ namespace LispInterpreter
             return lit;
         }
 
-        public static LispLiteral DebugAndCall(string prefix, LispRuntimeFunction runtimeFunction, SExpr sexpr,
+        public static LispLiteral DebugAndCall(LispRuntimeFunction runtimeFunction, SExpr sexpr,
             Context context)
         {
 
 
             var args = sexpr.Tail;
-            if (Debug && runtimeFunction.IsLambda)
+            if (DebugLambda && runtimeFunction.IsLambda)
             {
                 depth++;
-                DebugCall(prefix, runtimeFunction, sexpr, context);
+                DebugCall(runtimeFunction, sexpr, context);
             }
 
             var result = runtimeFunction.Apply(context, args.ToArray());
-            if (Debug && runtimeFunction.IsLambda)
+            if (DebugLambda && runtimeFunction.IsLambda)
             {
-                DebugResultCall(prefix, runtimeFunction, result);
+                DebugResultCall(runtimeFunction, result);
                 depth--;
             }
 
             return result;
         }
 
-        public static void DebugCall(string prefix, LispRuntimeFunction runtimeFunction, SExpr args, Context context)
+        public static void DebugCall(LispRuntimeFunction runtimeFunction, SExpr args, Context context)
         {
-            if (runtimeFunction.IsLambda)
+            if (runtimeFunction.IsLambda && DebugAll)
             {
                 Console.WriteLine(
-                    $"{getTab()}[1] call function {runtimeFunction.Name} ({string.Join(" , ", args.Tail.Select(x => DebugArg(x,context).ToString()))})");
+                    $"{getTab()}call {runtimeFunction.Name} ({string.Join(" , ", args.Tail.Select(x => DebugArg(x,context).ToString()))})");
                 DebugScope(context.Scope);
             }
         }
 
-        public static void DebugResultCall(string prefix, LispRuntimeFunction function, LispLiteral result)
+        public static void DebugResultCall(LispRuntimeFunction function, LispLiteral result)
         {
-            Console.WriteLine($"{getTab()}{prefix} function {function.Name} returns {result}");
+            if (DebugAll)
+            {
+                Console.WriteLine($"{getTab()}{function.Name} returns {result}");
+            }
         }
 
         public static int depth = 0;
@@ -153,13 +157,13 @@ namespace LispInterpreter
             {
                 if (context.Get(id.Value) is LispRuntimeFunction runtimeFunction)
                 {
-                    return DebugAndCall("[1]", runtimeFunction, sExpr, context);
+                    return DebugAndCall(runtimeFunction, sExpr, context);
                 }
             }
             if (sExpr.Head is LispRuntimeFunction function)
             {
                 var args = sExpr.Tail;
-                return DebugAndCall("[3]",function,sExpr,context);
+                return DebugAndCall(function,sExpr,context);
             }
             if (sExpr.Head is SExpr subExpr)
             {
@@ -170,12 +174,18 @@ namespace LispInterpreter
             return sExpr;
         }
         
-        public static LispRuntimeFunction GetLambda(Context lambdaContext, Lambda lambda)
+        public static LispRuntimeFunction GetLambda(Context lambdaContext, Lambda lambda,string name)
         {
             LispFunction function = (Context context, LispLiteral[] args) =>
             {
                 
                 var evaluatedArgs = EvalArgs(context, args.ToList());
+                if (DebugLambda)
+                {
+                    depth++;
+                    Console.WriteLine(
+                        $"{getTab()}call {name} ({string.Join(" , ", evaluatedArgs.Select(x => x.ToString()))})");
+                }
                 if (lambda.Parameters.Count > evaluatedArgs.Count)
                 {
                     throw new Exception("ouch : not enough arguments for lambda " + lambda);
@@ -191,6 +201,12 @@ namespace LispInterpreter
 
                 var scopedContext = new Context(scope, context);
                 var result = LispInterpreter.Interprete(scopedContext, lambda.Body);
+                if (DebugLambda)
+                {
+                    Console.WriteLine($"{getTab()}{name} :>{result.ToString()}<");
+                    depth--;
+                }
+
                 return result;
             };
             var lfunction = new LispRuntimeFunction(function);

@@ -20,7 +20,8 @@ namespace program
         {
             string source = File.ReadAllText("lisp.lisp");
             //source = "(atom 't)";
-            var r = coreLisp.Run("(atom 'ttt)");
+            var r = coreLisp.Run(source);
+            Console.WriteLine(r.ToString());
             ;
         }
 

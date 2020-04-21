@@ -11,9 +11,20 @@ namespace LispInterpreter.primitives
         {
             var evaluatedArgs = EvalArgs(context, args.ToList());
             AssertArgNumber("cdr",args,1);
+            if (evaluatedArgs[0].Type == LispValueType.Nil)
+            {
+                return NilLiteral.Instance;
+            }
+            
             AssertArgType("cdr",evaluatedArgs.ToArray(),0,LispValueType.Sexpr);
 
-            return new SExpr((evaluatedArgs[0] as SExpr).Tail);
+            var sExpr = evaluatedArgs[0] as SExpr;
+            if (sExpr.Elements.Count <= 1)
+            {
+                return NilLiteral.Instance;
+            }  
+            
+            return new SExpr(sExpr.Tail);
 
         }
     }

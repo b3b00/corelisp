@@ -45,7 +45,7 @@ namespace lispparser.core.lisp.model
         
         public override string ToString()
         {
-            return $"sexpr>[ {string.Join(" " ,Elements.Select(x => x.ToString()))} ]<";
+            return $"({string.Join(" " ,Elements.Select(x => x.ToString()))})";
         }
     }
 }

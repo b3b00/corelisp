@@ -30,7 +30,7 @@ namespace lispparser.core.lisp.model
 
         public override string ToString()
         {
-            return $"id>{Value}<";
+            return $"'{Value}";
         }
     }
 }

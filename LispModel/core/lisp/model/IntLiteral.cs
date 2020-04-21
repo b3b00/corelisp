@@ -28,7 +28,7 @@ namespace lispparser.core.lisp.model
         
         public override string ToString()
         {
-            return $"int>{Value}<";
+            return Value.ToString();
         }
     }
 }
