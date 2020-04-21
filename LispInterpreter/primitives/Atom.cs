@@ -1,6 +1,7 @@
 ﻿using static LispInterpreter.LispInterpreter;
 using System.Linq;
 using lispparser.core.lisp.model;
+using static LispInterpreter.primitives.PrimitiveLibrary;
 
 namespace LispInterpreter.primitives
 {
@@ -8,6 +9,8 @@ namespace LispInterpreter.primitives
     {
         public static LispLiteral ATOM(Context context, params LispLiteral[] args)
         {
+            AssertArgNumber("atom",args,1);
+            
             if (args.Length != 1)
             {
                 throw new LispPrimitiveBadArgNumber("ATOM",1,args.Length);

@@ -25,7 +25,7 @@ namespace core.lisp.lexer
 
         [Lexeme(GenericToken.Identifier,IdentifierType.Alpha)] SYMBOL = 12,
 
-        [Lexeme(GenericToken.KeyWord,"lambda")]  LAMBDA = 13 ,
+        // [Lexeme(GenericToken.KeyWord,"lambda")]  LAMBDA = 13 ,
 
         [Lexeme(GenericToken.String)]  STRING = 14 ,
         

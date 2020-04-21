@@ -49,24 +49,12 @@ namespace lispparser.core.lisp.parser
             return sexpr;
         }
 
-        [Production("literal : lambda")]
-        public ILisp lambdaLiteral(Lambda lambda)
-        {
-            return lambda;
-        }
-
         [Production("root: literal*")]
         public ILisp root(List<ILisp> statements)
         {
             return new LispProgram(statements.Cast<LispLiteral>().ToList());
         }
         
-        [Production("lambda:LPAREN[d] LAMBDA[d] LPAREN[d] SYMBOL* RPAREN[d] sexpr RPAREN[d]")]
-        public ILisp lambda(List<Token<LispLexer>> parameters, SExpr sexpr)
-        {
-            return new Lambda(parameters.Select(x => new SymbolLiteral(x)).ToList<LispLiteral>(), sexpr);
-        }
-
         [Production("sexpr : LPAREN[d] [literal|operator]* RPAREN[d]")]
         public ILisp sexpr(List<ILisp> expr)
         {

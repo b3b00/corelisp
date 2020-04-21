@@ -11,6 +11,25 @@ namespace LispInterpreter.primitives
     public class PrimitiveLibrary
     {
 
+        public static void AssertArgType(string primitiveName, LispLiteral[] args, int position, LispValueType expectedType)
+        {
+
+            LispLiteral arg = args[position];
+            
+            if (arg.Type != expectedType)
+            {
+                throw new LispPrimitiveBadArgType(primitiveName,position,expectedType,arg.Type);
+            }
+            
+        }
+
+        public static void AssertArgNumber(string primitiveName, LispLiteral[] args, int expectedNumber)
+        {
+            if (args.Length != expectedNumber)
+            {
+                throw new LispPrimitiveBadArgNumber(primitiveName,expectedNumber,args.Length);
+            }
+        }
         
         
         public static LispLiteral Map(Context context, params LispLiteral[] args)
@@ -75,6 +94,7 @@ namespace LispInterpreter.primitives
             {"cond",new LispRuntimeFunction(Cond.COND,"cond")},
             {"quote",new LispRuntimeFunction(Quote.QUOTE,"quote")},
             {"atom",new LispRuntimeFunction(Atom.ATOM,"atom")},
+            {"lambda",new LispRuntimeFunction(LambdaPrimitive.LAMBDA,"lambda")},
             {"defun",new LispRuntimeFunction(Defun.DEFUN,"defun")}
         };
 
