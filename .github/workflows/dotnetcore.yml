@@ -23,3 +23,10 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     - name: Test
       run: dotnet test CoreLispTests/CoreLispTests.csproj --no-restore --verbosity normal
+    - name: Pack
+      run: dotnet pack -c Release corelisp/CoreLisp.csproj
+    - name: uploadNuget 
+      uses: actions/upload-artifact@v1
+      with:
+        name: corelisp.nupkg
+        path:   corelisp/bin/Release/Corelisp*.nupkg
