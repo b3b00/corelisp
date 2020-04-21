@@ -19,6 +19,7 @@ namespace program
         static void LispInLisp()
         {
             string source = File.ReadAllText("lisp.lisp");
+            //source = "(atom 't)";
             var r = coreLisp.Run("(atom 'ttt)");
             ;
         }
@@ -31,7 +32,7 @@ namespace program
         static void TestProgram()
         {
             
-            
+
             coreLisp.Run(@"
 (setq vname 'x )
 (set vname ""vautour"")
