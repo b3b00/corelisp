@@ -36,6 +36,5 @@ jobs:
         PROJECT_FILE_PATH: CoreLisp/CoreLisp.csproj
         VERSION_FILE_PATH: CoreLisp/version.txt
         NUGET_KEY: ${{secrets.NUGET_KEY}}
-        TAG_FORMAT: *
     
    
