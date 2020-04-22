@@ -14,42 +14,21 @@ namespace program
     {
         private static CoreLisp coreLisp = new CoreLisp();
 
-       
-
-        static void LispInLisp()
+        
+        static void TestProgram(string lisFileName)
         {
-            string source = File.ReadAllText("lisp.lisp");
-            //source = "(atom 't)";
+            string source = File.ReadAllText(lisFileName);
             var r = coreLisp.Run(source);
             Console.WriteLine(r.ToString());
-            ;
         }
 
-
-        
-
-
-        
-        static void TestProgram()
-        {
-            
-
-            coreLisp.Run(@"
-(setq vname 'x )
-(set vname ""vautour"")
-(print ""X"") 
-(print  x)
-(print ""VNAME"")
-(print vanme)
-");
-   
-
-        }
+      
 
 
         static void Main(string[] args)
         {
-            LispInLisp();
+            //TestProgram("lisp.lisp");
+            TestProgram("assoc.lisp");
         }
     }
 }
