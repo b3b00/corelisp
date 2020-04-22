@@ -31,11 +31,5 @@ jobs:
         PROJECT_FILE_PATH: CoreLisp/CoreLisp.csproj
         VERSION_FILE_PATH: CoreLisp/version.txt
         NUGET_KEY: ${{secrets.NUGET_KEY}}
-    - name: Upload artifact
-      uses: actions/upload-artifact@v2-preview
-      with:
-        # Artifact name
-        name: nuget
-        # Directory containing files to upload
-        paths: 'CoreLisp/bin/Release/A/*.nupkg'
+    
    
