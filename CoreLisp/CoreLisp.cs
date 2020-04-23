@@ -37,7 +37,6 @@ namespace coreLisp
         public LispLiteral Run(string source,bool debug = false)
         {
             var r = Parser.Parse(source);
-            //Console.WriteLine(r.Result);
             if (r.IsError)
             {
                 r.Errors.ForEach(e => Console.WriteLine(e.ErrorMessage));
