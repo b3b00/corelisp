@@ -34,7 +34,7 @@ jobs:
       uses: rohith/publish-nuget@v2.3.0
       with:
         PROJECT_FILE_PATH: CoreLisp/CoreLisp.csproj
-        VERSION_FILE_PATH: CoreLisp/version.txt
+        VERSION_FILE_PATH: CoreLisp/CoreLisp.csproj
         NUGET_KEY: ${{secrets.NUGET_KEY}}
     
    
