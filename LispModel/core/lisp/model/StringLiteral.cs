@@ -22,7 +22,7 @@ namespace lispparser.core.lisp.model
         
         public override string ToString()
         {
-            return Value;
+            return $"\"{Value}\"";
         }
     }
 }

@@ -16,7 +16,7 @@ namespace LispInterpreter.primitives
             }
             Console.WriteLine("\nPRINT :: "+string.Join(" ",evaluatedArgs.Select(ev => ev.ToString()))+"\n");
             
-            return NilLiteral.Instance;
+            return evaluatedArgs.Last();
         }
     }
 }

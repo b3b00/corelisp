@@ -28,7 +28,7 @@ namespace program
         static void Main(string[] args)
         {
             //TestProgram("lisp.lisp");
-            TestProgram("assoc.lisp");
+            TestProgram("lisp.lisp");
         }
     }
 }

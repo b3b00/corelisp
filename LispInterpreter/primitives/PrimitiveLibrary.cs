@@ -95,7 +95,8 @@ namespace LispInterpreter.primitives
             {"quote",new LispRuntimeFunction(Quote.QUOTE,"quote")},
             {"atom",new LispRuntimeFunction(Atom.ATOM,"atom")},
             {"lambda",new LispRuntimeFunction(LambdaPrimitive.LAMBDA,"lambda")},
-            {"defun",new LispRuntimeFunction(Defun.DEFUN,"defun")}
+            {"defun",new LispRuntimeFunction(Defun.DEFUN,"defun")},
+            {"debug",new LispRuntimeFunction(Debug.DEBUG,"debug")}
         };
 
     }
