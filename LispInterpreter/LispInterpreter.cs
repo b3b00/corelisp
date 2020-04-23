@@ -12,7 +12,7 @@ namespace LispInterpreter
     {
 
         #region debugging 
-        public static bool DebugLambda = true;
+        public static bool DebugLambda = false;
         public static bool DebugAll = false;
         public static string getTab()
         {
@@ -28,9 +28,9 @@ namespace LispInterpreter
         public static LispLiteral DebugArg(LispLiteral lit, Context context)
         {
             var val = context.Get(lit.StringValue);
-            if ((lit.Type == LispValueType.Symbol) && val != null)
+            if (lit is SymbolLiteral symb && symb != null && context.Scope.ContainsKey(symb.Value))
             {
-                return val;
+                return context.Get(symb.Value);
             }
 
             return lit;
@@ -103,7 +103,14 @@ namespace LispInterpreter
 
         public static List<LispLiteral> EvalArgs(Context context, List<LispLiteral> args)
         {
-            return args.Select(x => EvalArg(context,x)).ToList();
+            List<LispLiteral> evaluated = new List<LispLiteral>();
+            foreach (var arg in args)
+            {
+                var eval = EvalArg(context, arg);
+                evaluated.Add(eval);
+            }
+
+            return evaluated;
         }
         
         
@@ -165,20 +172,25 @@ namespace LispInterpreter
                 var args = sExpr.Tail;
                 return DebugAndCall(function,sExpr,context);
             }
-            if (sExpr.Head is SExpr subExpr)
+            if (sExpr.Head is SExpr subExpr && sExpr.MoreThanOne())
             {
                 var evaluatedSubExpr = InterpreteSExpr(context, subExpr);
                 var t = new SExpr(evaluatedSubExpr, sExpr.Tail.ToArray());
                 return InterpreteSExpr(context,t);
             }
+
+            // if (sExpr.Head is SExpr single && sExpr.Single())
+            // {
+            //     return InterpreteSExpr(context, single);
+            // }
             return sExpr;
+            
         }
         
         public static LispRuntimeFunction GetLambda(Context lambdaContext, Lambda lambda,string name)
         {
             LispFunction function = (Context context, LispLiteral[] args) =>
             {
-                
                 var evaluatedArgs = EvalArgs(context, args.ToList());
                 if (DebugLambda)
                 {

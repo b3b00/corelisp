@@ -17,4 +17,30 @@
         ('t (assoc x (cdr y))))
 )
 
-(assoc 'b  (('a (12 13 14) ('b 28))))
+(setq associations
+    '(
+        (a (1 2)) 
+        (b (3 4 5))
+    )
+) 
+(print associations)
+
+
+(print "assoc 'a")
+
+(setq resa
+    (assoc 
+        'a  
+        associations
+    )
+)
+(print "=>" resa)
+
+(print "assoc 'b")
+(setq resb
+    (assoc 
+        'b  
+        associations
+    )
+)
+(print "=>" resb)

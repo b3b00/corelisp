@@ -17,6 +17,16 @@ namespace lispparser.core.lisp.model
 
         public List<LispLiteral> Elements { get; set; }
 
+        public int Count => Elements.Count;
+
+        public bool Any() => Elements.Any();
+
+        public bool Single() => Elements.Count == 1 ;
+
+        public bool MoreThanOne() => Elements.Count > 1;
+        
+        
+
         public LispLiteral Head => Elements.First();
 
         public List<LispLiteral> Tail => Elements.Skip(1).ToList();
