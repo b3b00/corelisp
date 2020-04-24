@@ -1,13 +1,13 @@
 using System;
 using core.lisp.lexer;
-using LispInterpreter;
-using lispparser.core.lisp.model;
-using lispparser.core.lisp.parser;
+using core.lisp.interpreter;
+using core.lisp.model;
+using core.lisp.parser;
 using NUnit.Framework;
 using sly.parser;
 using sly.parser.generator;
 
-namespace CoreLispTests
+namespace core.lisp.tests
 {
     public class AtomTests : CoreLispBaseTest
 

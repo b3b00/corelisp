@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LispInterpreter.primitives
+namespace core.lisp.interpreter.primitives
 {
     public class LispPrimitiveException : Exception
     {

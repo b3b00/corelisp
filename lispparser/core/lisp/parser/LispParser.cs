@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using core.lisp.lexer;
-using lispparser.core.lisp.model;
+using core.lisp.model;
 using sly.lexer;
 using sly.parser.generator;
 
-namespace lispparser.core.lisp.parser
+namespace core.lisp.parser
 {
     public class LispParser
     {

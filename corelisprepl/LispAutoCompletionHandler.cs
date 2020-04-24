@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using coreLisp;
+using core.lisp;
 
-namespace corelisprepl
+namespace core.lisp.repl
 {
     class LispAutoCompletionHandler : IAutoCompleteHandler
     {
@@ -23,37 +23,7 @@ namespace corelisprepl
 
             if (text.StartsWith("load "))
             {
-                var path = text.Substring(5);
-                
-                if (Directory.Exists(path))
-                {
-                    var props = Directory.GetDirectories(path).ToList();
-                    props.AddRange(Directory.GetFiles(path).ToList());
-                    return props.ToArray();    
-                }
-                else
-                {
-                    int ipath = Math.Max(path.LastIndexOf("\\"), path.LastIndexOf("/"));
-                    if (ipath > 0)
-                    {
-                        string parent = path.Substring(0, ipath+1);
-                        if (Directory.Exists(parent))
-                        {
-                            string namestart = path.Substring(ipath + 1);
-                            var props = Directory.GetDirectories(parent).ToList();
-                            props.AddRange(Directory.GetFiles(parent).ToList());
-                            props = props.Where(x =>
-                            {
-                                string name = x.Substring(parent.Length);
-                                ;
-                                return name.StartsWith(namestart,StringComparison.OrdinalIgnoreCase);
-                            }).ToList();
-                            return props.ToArray();
-                        }
-                    }
-                }
-
-                return null;
+                return CompleteLoad(text);
             }
 
             int i = text.LastIndexOf("(");
@@ -70,23 +40,46 @@ namespace corelisprepl
             foreach (var maybe in t)
             {
                 string prop = maybe;
-                // if (leadingSpaces == 0)
-                // {
-                //     string mm = text.Substring(0, Math.Max(0, i + 1 + leadingSpaces));
-                //     prop = mm + maybe;
-                // }
-
                 suggestions.Add(prop);
-                ;
             }
-            // var suggestions = t.Select(maybe =>
-            // {
-            //     string mm = text.Substring(0, Math.Max(0,i+1));
-            //     string prop = lead + maybe;
-            //     return prop;
-            // }).ToArray();
+           
 
             return suggestions.ToArray();
+        }
+
+        private static string[] CompleteLoad(string text)
+        {
+            var path = text.Substring(5);
+
+            if (Directory.Exists(path))
+            {
+                var props = Directory.GetDirectories(path).ToList();
+                props.AddRange(Directory.GetFiles(path).ToList());
+                return props.ToArray();
+            }
+            else
+            {
+                int ipath = Math.Max(path.LastIndexOf("\\"), path.LastIndexOf("/"));
+                if (ipath > 0)
+                {
+                    string parent = path.Substring(0, ipath + 1);
+                    if (Directory.Exists(parent))
+                    {
+                        string namestart = path.Substring(ipath + 1);
+                        var props = Directory.GetDirectories(parent).ToList();
+                        props.AddRange(Directory.GetFiles(parent).ToList());
+                        props = props.Where(x =>
+                        {
+                            string name = x.Substring(parent.Length);
+                            ;
+                            return name.StartsWith(namestart, StringComparison.OrdinalIgnoreCase);
+                        }).ToList();
+                        return props.ToArray();
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }

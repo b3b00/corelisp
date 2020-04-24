@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using lispparser.core.lisp.model;
-using static LispInterpreter.LispInterpreter;
+using core.lisp.model;
+using static core.lisp.interpreter.LispInterpreter;
 
-namespace LispInterpreter.primitives
+namespace core.lisp.interpreter.primitives
 {
     public class Print
     {

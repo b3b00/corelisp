@@ -1,14 +1,13 @@
 ﻿using System;
 using System.IO;
 using core.lisp.lexer;
-using LispInterpreter;
-using lispparser.core.lisp.lexer;
-using lispparser.core.lisp.model;
-using lispparser.core.lisp.parser;
+using core.lisp.interpreter;
+using core.lisp.model;
+using core.lisp.parser;
 using sly.parser;
 using sly.parser.generator;
 
-namespace coreLisp
+namespace core.lisp
 {
     public class CoreLisp
     {
@@ -48,7 +47,7 @@ namespace coreLisp
                 r.Errors.ForEach(e => Console.WriteLine(e.ErrorMessage));
                 return null;
             }
-            var x = LispInterpreter.LispInterpreter.Interprete(Context, r.Result as LispProgram);
+            var x = interpreter.LispInterpreter.Interprete(Context, r.Result as LispProgram);
             return x;
         }
         

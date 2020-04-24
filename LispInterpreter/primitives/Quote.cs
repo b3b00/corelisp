@@ -1,9 +1,9 @@
 ﻿using System;
-using static LispInterpreter.LispInterpreter;
+using static core.lisp.interpreter.LispInterpreter;
 using System.Linq;
-using lispparser.core.lisp.model;
+using core.lisp.model;
 
-namespace LispInterpreter.primitives
+namespace core.lisp.interpreter.primitives
 {
     public class Quote
     {

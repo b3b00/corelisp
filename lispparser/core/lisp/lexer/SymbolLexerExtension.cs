@@ -3,7 +3,7 @@ using core.lisp.lexer;
 using sly.lexer;
 using sly.lexer.fsm;
 
-namespace lispparser.core.lisp.lexer
+namespace core.lisp.lexer
 {
     public class SymbolLexerExtension
     {

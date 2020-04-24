@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
-namespace lispparser.core.lisp.model
+namespace core.lisp.model
 {
     public class LispProgram : ILisp
     {

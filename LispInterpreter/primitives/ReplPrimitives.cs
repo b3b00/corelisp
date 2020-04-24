@@ -1,13 +1,12 @@
 ﻿using System;
 using System.IO;
 using core.lisp.lexer;
-using lispparser.core.lisp.lexer;
-using lispparser.core.lisp.model;
-using lispparser.core.lisp.parser;
+using core.lisp.model;
+using core.lisp.parser;
 using sly.parser;
 using sly.parser.generator;
 
-namespace LispInterpreter.primitives
+namespace core.lisp.interpreter.primitives
 {
     public class ReplPrimitives : Primitive
     {

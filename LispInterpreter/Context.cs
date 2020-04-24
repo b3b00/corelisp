@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using LispInterpreter.primitives;
-using lispparser.core.lisp.model;
+using core.lisp.interpreter.primitives;
+using core.lisp.model;
 
-namespace LispInterpreter
+namespace core.lisp.interpreter
 {
     public class Context
     {

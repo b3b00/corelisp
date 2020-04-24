@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using coreLisp;
+using core.lisp;
 
-namespace corelisprepl
+namespace core.lisp.repl
 {
     class Program
     {

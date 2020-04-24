@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using lispparser.core.lisp.model;
+using core.lisp.model;
 using NUnit.Framework;
 
-namespace CoreLispTests
+namespace core.lisp.tests
 {
     public class ListPrimitivesTests : CoreLispBaseTest
     {

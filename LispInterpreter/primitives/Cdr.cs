@@ -1,9 +1,9 @@
-﻿using static LispInterpreter.LispInterpreter;
+﻿using static core.lisp.interpreter.LispInterpreter;
 using System.Linq;
-using lispparser.core.lisp.model;
-using static LispInterpreter.primitives.PrimitiveLibrary;
+using core.lisp.model;
+using static core.lisp.interpreter.primitives.PrimitiveLibrary;
 
-namespace LispInterpreter.primitives
+namespace core.lisp.interpreter.primitives
 {
     public class Cdr  : Primitive
     {

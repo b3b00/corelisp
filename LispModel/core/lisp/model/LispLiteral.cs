@@ -1,4 +1,4 @@
-﻿namespace lispparser.core.lisp.model
+﻿namespace core.lisp.model
 {
     public abstract class LispLiteral : ILisp
     {

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.IO;
 using core.lisp.lexer;
-using LispInterpreter;
-using lispparser.core.lisp.model;
-using lispparser.core.lisp.parser;
+using core.lisp.interpreter;
+using core.lisp.model;
+using core.lisp.parser;
 using sly.parser;
 using sly.parser.generator;
-using coreLisp;
+using core.lisp;
 
 namespace program
 {

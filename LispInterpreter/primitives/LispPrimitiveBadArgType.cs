@@ -1,6 +1,6 @@
-﻿using lispparser.core.lisp.model;
+﻿using core.lisp.model;
 
-namespace LispInterpreter.primitives
+namespace core.lisp.interpreter.primitives
 {
     public class LispPrimitiveBadArgType : LispPrimitiveException
     {
