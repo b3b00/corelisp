@@ -18,6 +18,7 @@ namespace core.lisp.repl
             string input = ReadLine.Read("> ");
             while (input != "quit")
             {
+                ReadLine.AddHistory(input);
                 if (input.StartsWith("load"))
                 {
                     string[] files = input.Split(new char[] {' '});
