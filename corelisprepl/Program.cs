@@ -14,11 +14,10 @@ namespace core.lisp.repl
         {
             
             ReadLine.AutoCompletionHandler = new LispAutoCompletionHandler(coreLisp);
-            
+            ReadLine.HistoryEnabled = true;
             string input = ReadLine.Read("> ");
             while (input != "quit")
             {
-                ReadLine.AddHistory(input);
                 if (input.StartsWith("load"))
                 {
                     string[] files = input.Split(new char[] {' '});
