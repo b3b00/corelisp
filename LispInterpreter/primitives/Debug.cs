@@ -6,7 +6,7 @@ using static LispInterpreter.LispInterpreter;
 
 namespace LispInterpreter.primitives
 {
-    public class Debug
+    public class Debug  : Primitive
     {
         public static bool DebugIt = false;
         

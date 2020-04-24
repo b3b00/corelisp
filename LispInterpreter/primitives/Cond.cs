@@ -4,7 +4,7 @@ using static LispInterpreter.LispInterpreter;
 
 namespace LispInterpreter.primitives
 {
-    public class Cond
+    public class Cond  : Primitive
     {
         public static LispLiteral COND(Context context, params LispLiteral[] args)
         {

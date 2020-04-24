@@ -5,7 +5,7 @@ using static LispInterpreter.primitives.PrimitiveLibrary;
 
 namespace LispInterpreter.primitives
 {
-    public class Atom
+    public class Atom : Primitive
     {
         public static LispLiteral ATOM(Context context, params LispLiteral[] args)
         {

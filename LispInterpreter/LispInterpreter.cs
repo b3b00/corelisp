@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
 using LispInterpreter.primitives;
 using lispparser.core.lisp.model;
 
@@ -14,6 +13,7 @@ namespace LispInterpreter
         #region debugging 
         public static bool DebugLambda = false;
         public static bool DebugAll = false;
+        [ExcludeFromCodeCoverage]
         public static string getTab()
         {
             string tab = "";
@@ -36,6 +36,7 @@ namespace LispInterpreter
             return lit;
         }
 
+        [ExcludeFromCodeCoverage]
         public static LispLiteral DebugAndCall(LispRuntimeFunction runtimeFunction, SExpr sexpr,
             Context context)
         {
@@ -58,6 +59,7 @@ namespace LispInterpreter
             return result;
         }
 
+        [ExcludeFromCodeCoverage]
         public static void DebugCall(LispRuntimeFunction runtimeFunction, SExpr args, Context context)
         {
             if (runtimeFunction.IsLambda && DebugAll)
@@ -68,6 +70,7 @@ namespace LispInterpreter
             }
         }
 
+        [ExcludeFromCodeCoverage]
         public static void DebugResultCall(LispRuntimeFunction function, LispLiteral result)
         {
             if (DebugAll)
@@ -78,6 +81,7 @@ namespace LispInterpreter
 
         public static int depth = 0;
 
+        [ExcludeFromCodeCoverage]
         public static void DebugScope(Dictionary<string, LispLiteral> scope)
         { Console.Write($"{getTab()}\t{{");
             foreach (var v in scope)

@@ -20,4 +20,17 @@
       <ProjectReference Include="..\lispparser\lispparser.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="lisp.lisp">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="map.lisp">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="assoc.lisp" />
+      <Content Include="assoc.lisp">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

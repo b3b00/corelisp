@@ -8,7 +8,7 @@ using static LispInterpreter.primitives.PrimitiveLibrary;
 
 namespace LispInterpreter.primitives
 {
-    public class LambdaPrimitive
+    public class LambdaPrimitive : Primitive
     {
         public static LispLiteral LAMBDA(Context context, params LispLiteral[] args)
         {
@@ -16,7 +16,7 @@ namespace LispInterpreter.primitives
             
 
             List<LispLiteral> cons = new List<LispLiteral>();
-            
+
 
             AssertArgType("lambda",args,0,LispValueType.Sexpr);
             AssertArgType("lambda",args,1,LispValueType.Sexpr);

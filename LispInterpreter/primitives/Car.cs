@@ -5,7 +5,7 @@ using static LispInterpreter.primitives.PrimitiveLibrary;
 
 namespace LispInterpreter.primitives
 {
-    public class Car
+    public class Car  : Primitive
     {
         public static LispLiteral CAR(Context context, params LispLiteral[] args)
         {
@@ -16,8 +16,8 @@ namespace LispInterpreter.primitives
             {
                 return NilLiteral.Instance;
             }
-            
-            
+
+
             AssertArgType("car",evaluatedArgs.ToArray(),0,LispValueType.Sexpr);
 
             if (evaluatedArgs.Any())

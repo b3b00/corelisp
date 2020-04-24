@@ -6,12 +6,12 @@ using static LispInterpreter.primitives.PrimitiveLibrary;
 
 namespace LispInterpreter.primitives
 {
-    public class Cons
+    public class Cons  : Primitive
     {
         public static LispLiteral CONS(Context context, params LispLiteral[] args)
         {
             var evaluatedArgs = EvalArgs(context, args.ToList());
-           AssertArgNumber("cons",args,2);
+            AssertArgNumber("cons",args,2);
 
             List<LispLiteral> cons = new List<LispLiteral>();
             cons.Add(evaluatedArgs[0]);

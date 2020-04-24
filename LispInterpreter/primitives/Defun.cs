@@ -5,7 +5,7 @@ using static LispInterpreter.primitives.PrimitiveLibrary;
 
 namespace LispInterpreter.primitives
 {
-    public class Defun
+    public class Defun  : Primitive
     {
         public static LispLiteral DEFUN(Context context, params LispLiteral[] args)
         {

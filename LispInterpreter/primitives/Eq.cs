@@ -6,7 +6,7 @@ using static LispInterpreter.primitives.PrimitiveLibrary;
 
 namespace LispInterpreter.primitives
 {
-    public class Eq
+    public class Eq : Primitive
     {
         public static LispLiteral EQ(Context context, params LispLiteral[] args)
         {

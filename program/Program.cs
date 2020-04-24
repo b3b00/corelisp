@@ -28,7 +28,7 @@ namespace program
         static void Main(string[] args)
         {
             //TestProgram("lisp.lisp");
-            TestProgram("lisp.lisp");
+            TestProgram("map.lisp");
         }
     }
 }

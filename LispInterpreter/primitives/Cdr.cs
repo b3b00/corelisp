@@ -5,7 +5,7 @@ using static LispInterpreter.primitives.PrimitiveLibrary;
 
 namespace LispInterpreter.primitives
 {
-    public class Cdr
+    public class Cdr  : Primitive
     {
         public static LispLiteral CDR(Context context, params LispLiteral[] args)
         {
@@ -15,7 +15,7 @@ namespace LispInterpreter.primitives
             {
                 return NilLiteral.Instance;
             }
-            
+
             AssertArgType("cdr",evaluatedArgs.ToArray(),0,LispValueType.Sexpr);
 
             var sExpr = evaluatedArgs[0] as SExpr;

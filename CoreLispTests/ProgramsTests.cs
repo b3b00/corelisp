@@ -2,6 +2,7 @@
 using System.Linq;
 using lispparser.core.lisp.model;
 using NUnit.Framework;
+using System.IO;
 
 namespace CoreLispTests
 {
@@ -55,7 +56,7 @@ namespace CoreLispTests
         {
             var r = Test( @"
 (setq test 't)
-(if test ""vrai"" ""faux"")");
+(cond (test ""vrai"" ) ('t ""faux""))");
             Assert.IsInstanceOf<StringLiteral>(r);
             Assert.AreEqual("vrai", (r as StringLiteral).Value);
             
@@ -94,6 +95,47 @@ factocinq
             Assert.AreEqual(42, (r as IntLiteral).Value);
             
         }
+        
+        [Test]
+        public void TestAssoc()
+        {
+string assocLisp = File.ReadAllText("assoc.lisp");
+            var r = Test(assocLisp);
+            Assert.IsInstanceOf<SExpr>(r);
+            SExpr result = r as SExpr;
+            Assert.AreEqual(3, result.Count);
+            Assert.AreEqual(3,result.Head.IntValue);
+            Assert.AreEqual(4,result.Tail.First().IntValue);
+            Assert.AreEqual(5,result.Tail.Last().IntValue);
+            
+        }
+        
+        [Test]
+        public void TestLispInLisp()
+        {
+            string assocLisp = File.ReadAllText("lisp.lisp");
+            var r = Test(assocLisp);
+            Assert.IsInstanceOf<SExpr>(r);
+            SExpr result = r as SExpr;
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(13,result.Head.IntValue);
+            Assert.AreEqual(14,result.Tail.First().IntValue);
+        }
+        
+        [Test]
+        public void TestMap()
+        {
+            string assocLisp = File.ReadAllText("map.lisp");
+            var r = Test(assocLisp);
+            Assert.IsInstanceOf<SExpr>(r);
+            SExpr result = r as SExpr;
+            Assert.AreEqual(3, result.Count);
+            Assert.AreEqual(2,result.Head.IntValue);
+            Assert.AreEqual(3,result.Tail.First().IntValue);
+            Assert.AreEqual(4,result.Tail.Last().IntValue);
+        }
+        
+        
 
     }
 }
