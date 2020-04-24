@@ -17,6 +17,7 @@ namespace coreLisp
         public CoreLisp()
         {
             BuildParser();
+            Context = new Context();
         }
         
         
@@ -31,9 +32,14 @@ namespace coreLisp
             }
         }
 
-       
+        public  Context Context { get; private set; }
 
-
+        public void Load(string filename)
+        {
+            string source = File.ReadAllText(filename);
+            Run(source, false);
+        }
+        
         public LispLiteral Run(string source,bool debug = false)
         {
             var r = Parser.Parse(source);
@@ -42,7 +48,7 @@ namespace coreLisp
                 r.Errors.ForEach(e => Console.WriteLine(e.ErrorMessage));
                 return null;
             }
-            var x = LispInterpreter.LispInterpreter.Interprete(new Context(), r.Result as LispProgram);
+            var x = LispInterpreter.LispInterpreter.Interprete(Context, r.Result as LispProgram);
             return x;
         }
         
