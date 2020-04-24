@@ -28,7 +28,9 @@ namespace LispInterpreter.primitives
             {"atom",new LispRuntimeFunction(Atom.ATOM,"atom")},
             {"lambda",new LispRuntimeFunction(LambdaPrimitive.LAMBDA,"lambda")},
             {"defun",new LispRuntimeFunction(Defun.DEFUN,"defun")},
-            {"debug",new LispRuntimeFunction(Debug.DEBUG,"debug")}
+            {"debug",new LispRuntimeFunction(Debug.DEBUG,"debug")},
+            {"load",new LispRuntimeFunction(ReplPrimitives.LOAD,"load")},
+            {"context",new LispRuntimeFunction(ReplPrimitives.CONTEXT,"context")}
         };
 
     }

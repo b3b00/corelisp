@@ -6,6 +6,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\LispModel\LispModel.csproj" />
+      <ProjectReference Include="..\lispparser\lispparser.csproj" />
     </ItemGroup>
 
     <ItemGroup>

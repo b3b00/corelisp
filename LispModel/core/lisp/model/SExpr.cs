@@ -55,7 +55,7 @@ namespace lispparser.core.lisp.model
         
         public override string ToString()
         {
-            return $"({string.Join(" " ,Elements.Select(x => x.ToString()))})";
+            return $"(\n\t{string.Join("\n\t" ,Elements.Select(x => x.ToString()))}\n)";
         }
     }
 }
