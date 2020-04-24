@@ -60,7 +60,6 @@ namespace corelisprepl
             string start = text;
             if (i >= 0)
             {
-                isReplCommand = false;
                 commands.AddRange(CoreLisp.Context.Scope.Keys.ToList());
                 start = text.Substring(i + 1);
                 start = start.Trim();
