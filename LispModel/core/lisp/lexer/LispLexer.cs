@@ -9,6 +9,8 @@ namespace core.lisp.lexer
 
     public enum LispLexer
     {
+        EOS = 0,
+        
         // 1 -> 10 : sugar
         [Lexeme(GenericToken.SugarToken, "(")] LPAREN = 1,
         [Lexeme(GenericToken.SugarToken, ")")] RPAREN = 2,
@@ -29,7 +31,7 @@ namespace core.lisp.lexer
         
         [Lexeme(GenericToken.Int)]  INT = 16 ,
         
-        [MultiLineComment("#|","|#")]
+        [SingleLineComment("#")]
         COMMENT=100
 
 
