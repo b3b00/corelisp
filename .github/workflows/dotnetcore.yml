@@ -13,28 +13,32 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+    - name: push
+      id: publish_nuget
+      uses: rohith/publish-nuget@v2
       with:
-        dotnet-version: 3.1.101
-    - name: Install dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
-    - name: Test
-      run: dotnet test CoreLispTests/CoreLispTests.csproj --no-restore --verbosity normal
-    - name: Pack
-      run: dotnet pack -c Release 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v1.0.0
+          PROJECT_FILE_PATH: Sample/Sample.fsproj
+          NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+    - name: Create Release
+      if: ${{ success() }}
+      id: create_release
+      uses: actions/create-release@latest
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: pack
-        path: CoreLisp/bin/Release
-    - name: Publish NuGet
-      uses: rohith/publish-nuget@v2.3.0
+        tag_name: ${{ steps.publish_nuget.outputs.VERSION }}
+        release_name: Release ${{ steps.publish_nuget.outputs.VERSION }}
+        draft: false
+        prerelease: false
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        PROJECT_FILE_PATH: CoreLisp/CoreLisp.csproj
-        VERSION_FILE_PATH: CoreLisp/CoreLisp.csproj
-        NUGET_KEY: ${{secrets.NUGET_KEY}}
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ${{ steps.publish_nuget.outputs.PACKAGE_PATH }}
+        asset_name: ${{ steps.publish_nuget.outputs.PACKAGE_NAME }}
+        asset_content_type: application/zip
     
    
