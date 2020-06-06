@@ -4,7 +4,7 @@
         <TargetFramework>netcoreapp3.0</TargetFramework>
         <PackageVersion>1.0.3</PackageVersion>
         <Description> .net core lisp interpreter</Description>
-        <Version>1.0.3</Version>
+        <version>1.0.3</version>
     </PropertyGroup>
 
     <ItemGroup>
