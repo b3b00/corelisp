@@ -15,12 +15,14 @@ jobs:
     - uses: actions/checkout@v2
     - name: push
       id: publish_nuget
-      uses: rohith/publish-nuget@v2
+      uses: brandedoutcast/publish-nuget@v2.5.2
       with:
-          PROJECT_FILE_PATH: Sample/Sample.fsproj
-          NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+          VERSION_REGEX: <version>(.*)<\/version>  
+          PROJECT_FILE_PATH: CoreLisp/CoreLisp.csproj
+          NUGET_KEY: ${{ secrets.NUGET_KEY }}
+          VERSION_FILE_PATH: CoreLisp/CoreLisp.csproj
     - name: Create Release
-      if: ${{ success() }}
+      if: ${{ success() && steps.publish_nuget.outputs.VERSION != ''  && steps.publish_nuget.outputs.VERSION != null }}
       id: create_release
       uses: actions/create-release@latest
       env:
@@ -31,6 +33,7 @@ jobs:
         draft: false
         prerelease: false
     - name: Upload Release Asset
+      if: ${{ success() && steps.create_release.outputs.upload_url != ''  && steps.create_release.outputs.upload_url != null }}
       id: upload-release-asset 
       uses: actions/upload-release-asset@v1
       env:
@@ -40,5 +43,4 @@ jobs:
         asset_path: ${{ steps.publish_nuget.outputs.PACKAGE_PATH }}
         asset_name: ${{ steps.publish_nuget.outputs.PACKAGE_NAME }}
         asset_content_type: application/zip
-    
    
