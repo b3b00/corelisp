@@ -30,7 +30,7 @@ jobs:
         testProject: 'CoreLispTests/CoreLispTests.csproj'
         output: 'lcov.info'
         outputFormat: 'lcov'
-        excludes: '[CoreLispTests]*,[corelisprepl]*,[program]*'
+        #excludes: '[CoreLispTests]*,[corelisprepl]*,[program]*'
     - name: push
       id: publish_nuget
       uses: brandedoutcast/publish-nuget@v2.5.2
