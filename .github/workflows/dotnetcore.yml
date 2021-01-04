@@ -24,7 +24,7 @@ jobs:
       run: dotnet build --configuration Release 
     - name : test coverage with coverlet
       id: coverlet
-      uses: b3b00/coverlet-action
+      uses: b3b00/coverlet-action@1.0.91
       with:
         testProject: 'CoreLispTests/CoreLispTests.csproj'
         output: 'lcov.info'
