@@ -14,6 +14,22 @@ jobs:
         os: [ubuntu-latest, windows-latest]
     steps:
     - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101   
+    - name: Clean artifacts and nugets 
+      run: dotnet clean  --configuration Release && dotnet nuget locals all --clear
+    - name: Build with dotnet 
+      run: dotnet build --configuration Release 
+    - name : test coverage with coverlet
+      id: coverlet
+      uses: b3b00/coverlet-action
+      with:
+        testProject: 'CoreLispTests/CoreLispTests.csproj'
+        output: 'lcov.info'
+        outputFormat: 'lcov'
+        excludes: '[CoreLispTests]*,[corelisprepl]*,[program]*'
     - name: push
       id: publish_nuget
       uses: brandedoutcast/publish-nuget@v2.5.2
