@@ -11,12 +11,7 @@ namespace core.lisp.interpreter.primitives
         public static LispLiteral EQ(Context context, params LispLiteral[] args)
         {
             var evaluatedArgs =  EvalArgs(context, args.ToList());
-            if (LispInterpreter.DebugAll)
-            {
-                depth++;
-                Console.WriteLine(
-                    $"{getTab()}call eq ({string.Join(" , ", evaluatedArgs.Select(x => DebugArg(x, context).ToString()))})");
-            }
+           
 
             AssertArgNumber("eq",args,2);
 
@@ -29,20 +24,9 @@ namespace core.lisp.interpreter.primitives
                 {
                     if (v1.ToString() == v2.ToString())
                     {
-                        if (LispInterpreter.DebugAll)
-                        {
-                            Console.WriteLine($"{getTab()}eq :>True<");
-                            depth--;
-                        }
                         return SymbolLiteral.True;
                     }
                 }
-            }
-
-            if (LispInterpreter.DebugAll)
-            {
-                Console.WriteLine($"{getTab()}eq :>False<");
-                depth--;
             }
 
             return NilLiteral.Instance;

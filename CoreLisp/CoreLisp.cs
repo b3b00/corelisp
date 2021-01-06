@@ -36,10 +36,10 @@ namespace core.lisp
         public void Load(string filename)
         {
             string source = File.ReadAllText(filename);
-            Run(source, false);
+            Run(source);
         }
         
-        public LispLiteral Run(string source,bool debug = false)
+        public LispLiteral Run(string source)
         {
             var r = Parser.Parse(source);
             if (r.IsError)
