@@ -6,6 +6,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="factorial.lisp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="map.lisp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -26,6 +26,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Content Include="factorial.lisp">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
       <Content Include="lisp.lisp">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>

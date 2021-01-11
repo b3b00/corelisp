@@ -135,6 +135,15 @@ string assocLisp = File.ReadAllText("assoc.lisp");
             Assert.AreEqual(4,result.Tail.Last().IntValue);
         }
         
+        [Test]
+        public void FactorialTest()
+        {
+            string assocLisp = File.ReadAllText("factorial.lisp");
+            var r = Test(assocLisp);
+            Assert.IsInstanceOf<LispLiteral>(r);
+            LispLiteral result = r as LispLiteral;
+            Assert.AreEqual(10*9*8*7*6*5*4*3*2*1, r.IntValue);
+        }
         
 
     }
