@@ -113,8 +113,8 @@ string assocLisp = File.ReadAllText("assoc.lisp");
         [Test]
         public void TestLispInLisp()
         {
-            string assocLisp = File.ReadAllText("lisp.lisp");
-            var r = Test(assocLisp);
+            string lispLisp = File.ReadAllText("lisp.lisp");
+            var r = Test(lispLisp);
             Assert.IsInstanceOf<SExpr>(r);
             SExpr result = r as SExpr;
             Assert.AreEqual(2, result.Count);
@@ -125,8 +125,8 @@ string assocLisp = File.ReadAllText("assoc.lisp");
         [Test]
         public void TestMap()
         {
-            string assocLisp = File.ReadAllText("map.lisp");
-            var r = Test(assocLisp);
+            string mapLisp = File.ReadAllText("map.lisp");
+            var r = Test(mapLisp);
             Assert.IsInstanceOf<SExpr>(r);
             SExpr result = r as SExpr;
             Assert.AreEqual(3, result.Count);
@@ -138,8 +138,8 @@ string assocLisp = File.ReadAllText("assoc.lisp");
         [Test]
         public void FactorialTest()
         {
-            string assocLisp = File.ReadAllText("factorial.lisp");
-            var r = Test(assocLisp);
+            string factorialLisp = File.ReadAllText("factorial.lisp");
+            var r = Test(factorialLisp);
             Assert.IsInstanceOf<LispLiteral>(r);
             LispLiteral result = r as LispLiteral;
             Assert.AreEqual(10*9*8*7*6*5*4*3*2*1, r.IntValue);
