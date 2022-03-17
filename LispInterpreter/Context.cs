@@ -44,7 +44,12 @@ namespace core.lisp.interpreter
 
         public void Set(string name, LispLiteral value)
         {
-            Scope.Add(name,value);
+            if (Scope.ContainsKey(name)) {
+                Scope[name] = value;
+            }
+            else {
+                Scope.Add(name,value);
+            }
         }
     }
 }

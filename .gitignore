@@ -7,3 +7,7 @@ Debug/*
 debug/*
 .vscode/*
 .vs/*
+CoreLispTests/TestResults/
+CoreLispTests/coverage.json
+CoreLispTests/lcov.info
+corelisp.sln.DotSettings.user

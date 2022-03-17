@@ -1,16 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\LispModel\LispModel.csproj" />
       <ProjectReference Include="..\lispparser\lispparser.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="sly" Version="2.5.0.1" />
     </ItemGroup>
 
 </Project>

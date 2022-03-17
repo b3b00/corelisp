@@ -6,15 +6,14 @@
         {
             "label": "build",
             "command": "dotnet",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
+            "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/CoreLispTests/CoreLispTests.csproj"
+                "${workspaceFolder}/CoreLispTests/CoreLispTests.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
             ],
-            "problemMatcher": "$msCompile",
+            "problemMatcher": "$msCompile"
         },
         {
             "label": "unit tests",
@@ -45,6 +44,31 @@
                 "${workspaceFolder}/CoreLispTests/CoreLispTests.csproj"
             ],
             "problemMatcher": "$msCompile",            
+        },
+        {
+            "label": "publish",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/CoreLispTests/CoreLispTests.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "${workspaceFolder}/CoreLispTests/CoreLispTests.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
         },
     ]
 }
