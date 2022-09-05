@@ -67,8 +67,7 @@ jobs:
       run: |
         echo 'new version is :'
         echo ${{steps.publish_nuget.outputs.VERSION}}
-        echo 'success ? :' 
-        echo ${{success()}}
+        echo 'success ? : dont know :('         
         echo 'matrix :'
         echo ${{matrix.os}}                
     - name: Create Release
