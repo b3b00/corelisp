@@ -2,9 +2,9 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
-        <PackageVersion>1.0.7</PackageVersion>
+        <PackageVersion>1.0.8</PackageVersion>
         <Description> .net core lisp interpreter</Description>
-        <version>1.0.7</version> <PackageProjectUrl>https://github.com/b3b00/corelisp</PackageProjectUrl>
+        <version>1.0.8</version> <PackageProjectUrl>https://github.com/b3b00/corelisp</PackageProjectUrl>
         <RepositoryUrl>https://github.com/b3b00/corelisp</RepositoryUrl>
         <PackageLicenseUrl>https://github.com/b3b00/corelisp/blob/master/LICENSE</PackageLicenseUrl>
     </PropertyGroup>
