@@ -11,7 +11,7 @@ namespace core.lisp.tests
         {
             var r = Test("( + 1.0 2.0 )");
             Assert.IsInstanceOf<DoubleLiteral>(r);
-            Assert.AreEqual(42.0, (r as DoubleLiteral).Value);
+            Assert.AreEqual(3.0, (r as DoubleLiteral).Value);
         }
 
         [Test]

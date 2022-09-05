@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <PackageVersion>1.0.6</PackageVersion>
         <Description> .net core lisp interpreter</Description>
         <version>1.0.6</version> <PackageProjectUrl>https://github.com/b3b00/corelisp</PackageProjectUrl>
@@ -16,7 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="sly" Version="2.5.0.1" />
+      <PackageReference Include="sly" Version="2.9.0.9" />
     </ItemGroup>
 
 </Project>
