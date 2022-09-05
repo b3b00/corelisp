@@ -63,6 +63,10 @@ jobs:
           NUGET_KEY: ${{secrets.NUGET_KEY}}
           VERSION_FILE_PATH: ${{env.MAIN_CSPROJ}}
           INCLUDE_SYMBOLS: true
+    - name: display version    
+      run: |
+        echo 'new version is :'
+        echo ${{steps.publish_nuget.outputs.VERSION}}
     - name: Create Release
       if: ${{ success() && matrix.os == 'ubuntu-latest' && steps.publish_nuget.outputs.VERSION != ''  && steps.publish_nuget.outputs.VERSION != null }}
       id: create_release
