@@ -31,7 +31,7 @@ jobs:
     - name: Build with dotnet 
       run: dotnet build --configuration Release     
     - name: Test with dotnet
-      uses: b3b00/coverlet-action@1.1.8
+      uses: b3b00/coverlet-action@1.2.2
       id: 'coverlet'
       if: env.RUN_TESTS
       with:
@@ -40,7 +40,7 @@ jobs:
         outputFormat: 'lcov'
         excludes: '[program]*'
     - name: coveralls      
-      uses: coverallsapp/github-action@v1.2.2
+      uses: coverallsapp/github-action@v1.1.2
       if: matrix.os == 'windows-latest' && env.RUN_TESTS
       with:
         github-token: ${{secrets.GITHUB_TOKEN }} 
